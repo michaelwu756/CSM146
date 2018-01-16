@@ -48,5 +48,5 @@ result = np.random.multivariate_normal(mean, cov, 1000)
 x, y=result.T
 plt.plot(x, y)
 plt.axis('equal')
-plt.savefig("Problem10-d.pdf")
+plt.savefig("Problem10-e.pdf")
 plt.clf
