@@ -5,9 +5,10 @@
 \usepackage{pgfplots}
 \usepackage{calc}
 \usepackage{graphicx}
-\usepackage{caption}
 \usepackage{float}
+\usepackage{hyperref}
 \pgfplotsset{compat=1.12}
+\hypersetup{colorlinks,urlcolor=blue}
 \begin{document}
 \title{Computer Science M146, Homework 0}
 \date{January 18th, 2018}
@@ -430,8 +431,30 @@ After \(x\) iterations, we can search an array of size \(2^x\). Thus for an arra
 
 \section*{Problem 11}
 
-
+The eigenvector is \(\left(\begin{matrix}0\\1\end{matrix}\right)\) which corresponds to the eigenvalue \(3\).
 
 \section*{Problem 12}
+
+\paragraph{a)}
+
+SIDO: A phamacology dataset.
+
+\paragraph{b)}
+
+\href{http://www.causality.inf.ethz.ch/data/SIDO.html}{http://www.causality.inf.ethz.ch/data/SIDO.html}
+
+\paragraph{c)}
+
+The features are descriptions of molecules. The labels are binary and can either be \(+1\) to represent molecular
+activity indicating the AIDS/HIV virus, or \(-1\) to represent activity not indicating the AIDS/HIV virus.
+
+\paragraph{d)}
+
+There are \(12678\) training examples and \(10000\) test examples.
+
+\paragraph{e)}
+
+There are \(4932\) features in the dataset, each one is a molecular descriptor such as number of carbon atoms.
+These are binary, so they are \(0\) for the feature not being present and \(1\) for the feature being present.
 
 \end{document}
