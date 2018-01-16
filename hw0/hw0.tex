@@ -4,6 +4,9 @@
 \usepackage{enumerate}
 \usepackage{pgfplots}
 \usepackage{calc}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{float}
 \pgfplotsset{compat=1.12}
 \begin{document}
 \title{Computer Science M146, Homework 0}
@@ -376,8 +379,55 @@ After \(x\) iterations, we can search an array of size \(2^x\). Thus for an arra
                 Taking the absolute value of this, we get the distance \(\frac{b}{\left\lVert \mathbf{w}\right\rVert_2}\) to the origin.
 \end{enumerate}
 
-
 \section*{Problem 10}
+
+\paragraph{a)} See figure \(1\).
+
+\begin{figure}[H]
+        \begin{center}
+                \includegraphics[height=2.5in]{Problem10-a}
+                \caption{\(1000\) samples with mean \((0,0)\) and identity covariance matrix.}
+        \end{center}
+\end{figure}
+
+\pagebreak
+
+\paragraph{b)} See figure \(2\). The center shifts to \((1,1)\).
+
+\begin{figure}[H]
+        \begin{center}
+                \includegraphics[height=2.5in]{Problem10-b}
+                \caption{\(1000\) samples with mean \((1,1)\) and identity covariance matrix.}
+        \end{center}
+\end{figure}
+
+\paragraph{c)} See figure \(3\). It becomes more spread out.
+
+\begin{figure}[h!]
+        \begin{center}
+                \includegraphics[height=2.5in]{Problem10-c}
+                \caption{\(1000\) samples with mean \((0,0)\) and covariance matrix \(2I_2\).}
+        \end{center}
+\end{figure}
+
+\paragraph{d)} See figure \(4\). \(x\) and \(y\) become positively correlated.
+
+\begin{figure}[H]
+        \begin{center}
+                \includegraphics[height=2.5in]{Problem10-d}
+                \caption{\(1000\) samples with mean \((0,0)\) and positively correlated covariance matrix.}
+        \end{center}
+\end{figure}
+
+\paragraph{e)} See figure \(5\). \(x\) and \(y\) become negatively correlated.
+
+\begin{figure}[H]
+        \begin{center}
+                \includegraphics[height=2.5in]{Problem10-e}
+                \caption{\(1000\) samples with mean \((0,0)\) and negatively correlated covariance matrix.}
+        \end{center}
+\end{figure}
+
 \section*{Problem 11}
 \section*{Problem 12}
 
