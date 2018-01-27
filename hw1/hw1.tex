@@ -15,4 +15,66 @@
 \author{Michael Wu\\UID: 404751542}
 \maketitle
 
+\section*{Problem 1}
+
+\paragraph{a)}
+
+The best \(1\)-leaf decision tree will always predict \(1\). This is wrong \(\frac{1}{8}\) of the time. Thus over \(2^n\) training examples
+the decision tree will make \(2^{n-3}\) mistakes.
+
+\paragraph{b)}
+
+No, because if we were to split based on any one of \(X_i\), we would predict \(1\) when \(X_i=1\) and when \(X_i=0\). This is because any split
+on any variable yields a majority of results \(Y=1\) on either branch of the tree. This results in the exact same configuration as the \(1\)-leaf
+decision tree.
+
+\paragraph{c)}
+
+\[E(Y)=-\frac{1}{8}\log_2\left(\frac{1}{8}\right)-\frac{7}{8}\log_2\left(\frac{7}{8}\right)\approx 0.5436\]
+
+\paragraph{d)}
+
+Yes. Splitting by any one of \(X_1,X_2,X_3\) yields entropy
+
+\begin{align*}
+        E(Y)&=\frac{1}{2}(-1\log(1))+\frac{1}{2}\left(-\frac{1}{4}\log_2\left(\frac{1}{4}\right)-\frac{3}{4}\log_2\left(\frac{3}{4}\right)\right)\\
+        &=0+\frac{1}{2}\left(-\frac{1}{4}\log_2\left(\frac{1}{4}\right)-\frac{3}{4}\log_2\left(\frac{3}{4}\right)\right)\\
+        &\approx 0.4056
+\end{align*}
+
+\section*{Problem 2}
+
+\paragraph{a)}
+
+Let \(C=\frac{p_k}{p_k+n_k}\) be a constant. Then the number of positive examples \(p\) is given by
+\[p=\sum_{\forall k} C|S_k|=C|S|\]
+Because \(|S|=p+n\), we know that the proportion of positive examples \(\frac{p}{p+n}\) is equal to \(C\). The proportion
+of negative examples is the complement of this, \(1-C\). Additionally, we are given that the proportion of negative
+and positive examples is also the same for every subset \(S_k\). Thus we calculate the entropy for the entire set \(S\)
+\[E(S)=B(C)=-C\log_2(C)-(1-C)\log_2(1-C)\]
+We then calculate the conditional entropy based on our split by attribute \(X_j\).
+\[E_{X_j}(S)=\sum_{\forall k} \frac{|S_k|}{|S|} B(C)=\frac{|S|}{|S|}B(C)=-C\log_2(C)-(1-C)\log_2(1-C)\]
+Our information gain is thus the difference between \(E(S)\) and \(E_{X_j}(S)\), which is zero.
+
+\section*{Problem 3}
+
+\paragraph{a)}
+
+Because data points are their own closest neighbor, a value of \(k=1\) will always predict the correct value for the training data.
+The resulting training error is \(0\%\).
+
+\paragraph{b)}
+
+Using too large values of \(k\) will be bad for this dataset due to underfitting. The two positives and the two negatives on the top left
+and bottom right, respectively, would be drowned out by the other data points near them for \(k>3\). They would have no effect on the prediction,
+which may lead to an inaccurate model. Eventually if \(k\) is big enough, points on the opposite side of the graph would affect predictions, which makes little sense.
+In contrast a too small value of \(k\) may lead to overfitting, so if the stray negatives and positives were just noise, the model
+may make the wrong prediction based on the noise. Predictions won't be averaged out like it would with higher \(k\).
+
+\paragraph{c)}
+
+A value of \(k=5\) minimizes leave-one-out cross validation error. There would be \(14\) different training and validation cases, of which
+two positives in the top left and two negatives in the bottom right would be wrong. This leads to a training error of
+\[\frac{4}{14}\approx 28.57\%\]
+
 \end{document}
