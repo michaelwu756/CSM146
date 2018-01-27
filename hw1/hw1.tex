@@ -7,6 +7,7 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{hyperref}
+\usepackage{chngpage}
 \pgfplotsset{compat=1.12}
 \hypersetup{colorlinks,urlcolor=blue}
 \begin{document}
@@ -76,5 +77,34 @@ may make the wrong prediction based on the noise. Predictions won't be averaged 
 A value of \(k=5\) minimizes leave-one-out cross validation error. There would be \(14\) different training and validation cases, of which
 two positives in the top left and two negatives in the bottom right would be wrong. This leads to a training error of
 \[\frac{4}{14}\approx 28.57\%\]
+
+\section*{Problem 4.1}
+
+\paragraph{a)}
+
+For \texttt{Pclass}, I noticed that \(1\)st class and \(2\)nd class passengers
+had a much higher rate of survival than \(3\)rd class passengers. There are many
+more passengers in \(3\)rd class than in \(1\)st or \(2\)nd. For \texttt{Sex},
+I noticed that women had a  higher chance of survival than men. For \texttt{Age}, it
+appears that most children under \(10\) survived, and the elderly and young survive
+more than people in their twenties and thirties. For \texttt{SibSp}, having between
+one and three siblings and spouses ensured a higher rate of survival. For
+\texttt{Parch}, having more parents and children ensured higher rates of survival.
+For \texttt{Fare}, more expensive fares ensured a higher rate of survival. For
+\texttt{Embarked}, it appears that people from Cherbourg had the highest rate of
+survival, then Southampton and Queenstown had a similar rate of survival. Most
+passengers embarked at Southampton. \texttt{Age}, \texttt{SibSp}, \texttt{Parch},
+and \texttt{Fare} all show positive skews.
+
+\begin{figure}[H]
+        \begin{adjustwidth}{-10in}{-10in}
+                \begin{center}
+                        \includegraphics[width=8.5in,height=\textheight,keepaspectratio]{code/src/histograms}
+                        \caption{Generated histograms from \texttt{titanic\_train.csv} for problem 4.1}
+                \end{center}
+        \end{adjustwidth}
+\end{figure}
+
+\section*{Problem 4.2}
 
 \end{document}
