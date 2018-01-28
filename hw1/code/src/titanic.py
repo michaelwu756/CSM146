@@ -374,7 +374,7 @@ def main():
     #plt.axis('auto')
     #plt.xlabel('K')
     #plt.ylabel('10-Fold Cross Validation Average Error')
-    #plt.title('K-NN Classifier 10-Fold Cross Validation For Titanic Data')
+    #plt.title('K-NN Classifier 10-Fold Cross Validation\nFor Titanic Data')
     #plt.savefig("Problem4.2-f.pdf")
     #plt.clf()
 
@@ -399,7 +399,7 @@ def main():
     #plt.xlabel('Max Depth')
     #plt.ylabel('Average Error')
     #plt.legend(loc='lower left')
-    #plt.title('Max-Depth Decision Tree Classifier 80/20 Cross Validation For Titanic Data')
+    #plt.title('Max-Depth Decision Tree Classifier 80/20 Cross Validation\nFor Titanic Data')
     #plt.savefig("Problem4.2-g.pdf")
     #plt.clf()
 
@@ -436,7 +436,7 @@ def main():
     #fontP = FontProperties()
     #fontP.set_size('small')
     #plt.legend(loc='best', prop=fontP)
-    #plt.title('Learning Rate of 7-NN and Max Depth 6 Decision Tree For Titanic Data')
+    #plt.title('Learning Rate of 7-NN and Max Depth 6 Decision Tree\nFor Titanic Data')
     #plt.savefig("Problem4.2-h.pdf")
     #plt.clf()
 
