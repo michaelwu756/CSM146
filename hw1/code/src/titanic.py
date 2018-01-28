@@ -16,6 +16,8 @@ from sklearn.cross_validation import cross_val_score
 from sklearn.cross_validation import train_test_split
 from sklearn import metrics
 
+from matplotlib.font_manager import FontProperties
+
 ######################################################################
 # classes
 ######################################################################
@@ -204,7 +206,7 @@ def plot_histogram(X, y, Xname, yname, show = True) :
     return data, bins, align, labels
 
 
-def error(clf, X, y, ntrials=100, test_size=0.2) :
+def error(clf, X, y, ntrials=100, test_size=0.2, train_size=None) :
     """
     Computes the classifier error over a random split of the data,
     averaged over ntrials runs.
@@ -227,7 +229,7 @@ def error(clf, X, y, ntrials=100, test_size=0.2) :
     train_error = 0
     test_error = 0
     for i in range(0, ntrials):
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=i)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, train_size=train_size, random_state=i)
         clf.fit(X_train, y_train)
         y_pred = clf.predict(X_train)
         train_error += 1- metrics.accuracy_score(y_train, y_pred, normalize=True)
@@ -403,11 +405,40 @@ def main():
 
 
 
-    ### ========== TODO : START ========== ###
+    #========================================
     # part h: investigate Decision Tree and k-Nearest Neighbors classifier with various training set sizes
     print('Investigating training set sizes...')
-
-    ### ========== TODO : END ========== ###
+    xPlot=[]
+    decisionTreeTrainErrorPlot=[]
+    decisionTreeTestErrorPlot=[]
+    kNeighborsTrainErrorPlot=[]
+    kNeighborsTestErrorPlot=[]
+    clfDecisionTree = DecisionTreeClassifier(criterion='entropy', max_depth=6)
+    clfKNeighbors = KNeighborsClassifier(n_neighbors=7)
+    for trainingPercentage in range(1,11):
+        trainError, testError= error(clfDecisionTree, X, y, test_size=0.1, train_size=trainingPercentage*0.09)
+        print('\t-- Max-Depth 6 Decision Tree %d%% learning training error: %.3f \t testing error: %.3f' % (trainingPercentage*10, trainError, testError))
+        xPlot.append(trainingPercentage*10)
+        decisionTreeTrainErrorPlot.append(trainError)
+        decisionTreeTestErrorPlot.append(testError)
+    for trainingPercentage in range(1,11):
+        trainError, testError= error(clfKNeighbors, X, y, test_size=0.1, train_size=trainingPercentage*0.09)
+        print('\t-- 7-NN %d%% learning training error: %.3f \t testing error: %.3f' % (trainingPercentage*10, trainError, testError))
+        kNeighborsTrainErrorPlot.append(trainError)
+        kNeighborsTestErrorPlot.append(testError)
+    #line1, =plt.plot(xPlot, decisionTreeTrainErrorPlot, '-', label='Max Depth 6 Decision Tree Training Error')
+    #line2, =plt.plot(xPlot, decisionTreeTestErrorPlot, '-', label='Max Depth 6 Decision Tree Test Error')
+    #line3, =plt.plot(xPlot, kNeighborsTrainErrorPlot, '-', label='7-NN Training Error')
+    #line4, =plt.plot(xPlot, kNeighborsTestErrorPlot, '-', label='7-NN Test Error')
+    #plt.axis('auto')
+    #plt.xlabel('Training Percentage')
+    #plt.ylabel('Average Error')
+    #fontP = FontProperties()
+    #fontP.set_size('small')
+    #plt.legend(loc='best', prop=fontP)
+    #plt.title('Learning Rate of 7-NN and Max Depth 6 Decision Tree For Titanic Data')
+    #plt.savefig("Problem4.2-h.pdf")
+    #plt.clf()
 
 
     print('Done')
