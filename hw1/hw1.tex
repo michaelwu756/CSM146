@@ -10,6 +10,7 @@
 \usepackage{chngpage}
 \pgfplotsset{compat=1.12}
 \hypersetup{colorlinks,urlcolor=blue}
+\graphicspath{{./code/src/}}
 \begin{document}
 \title{Computer Science M146, Homework 1}
 \date{January 30th, 2018}
@@ -99,12 +100,112 @@ and \texttt{Fare} all show positive skews.
 \begin{figure}[H]
         \begin{adjustwidth}{-10in}{-10in}
                 \begin{center}
-                        \includegraphics[width=8.5in,height=\textheight,keepaspectratio]{code/src/histograms}
-                        \caption{Generated histograms from \texttt{titanic\_train.csv} for problem 4.1}
+                        \includegraphics[width=8.5in,height=\textheight,keepaspectratio]{histograms}
+                        \caption{Generated histograms from \texttt{titanic\_train.csv} for problem 4.1.}
                 \end{center}
         \end{adjustwidth}
 \end{figure}
 
 \section*{Problem 4.2}
+
+\paragraph{b)}
+
+My implementation of the \texttt{RandomClassifier} class included the following methods.
+
+\begin{verbatim}
+def fit(self, X, y) :
+    self.probabilities_ = {}
+
+    for i in y.flat:
+        if i in self.probabilities_:
+            self.probabilities_[i]=self.probabilities_[i]+1
+        else:
+            self.probabilities_[i]=1
+
+    for i in self.probabilities_.keys():
+        self.probabilities_[i]= \
+            self.probabilities_[i]/float(y.size)
+
+    return self
+
+def predict(self, X, seed=1234) :
+    if self.probabilities_ is None :
+        raise Exception("Classifier not initialized.",\
+                "Perform a fit first.")
+    np.random.seed(seed)
+
+    n,d = X.shape
+    y = np.random.choice(self.probabilities_.keys(),
+        n, p=self.probabilities_.values())
+
+    return y
+\end{verbatim}
+
+This gave me the expected training error of \(0.485\).
+
+\paragraph{c)}
+
+The training error of the \texttt{DecisionTreeClassifier} was \(0.014\).
+
+\paragraph{d)}
+
+The training error of the \texttt{KNeighborsClassifier} was \(0.162\) for \(K=3\), \(0.201\) for \(K=5\), and \(0.240\) for \(K=7\).
+
+\paragraph{e)}
+
+The errors are shown in the following table.\\
+
+\begin{center}
+        \begin{tabular}{c | c c}
+                Classifier & Training Error & Testing Error\\
+                \hline
+                MajorityVote & 0.404 & 0.407\\
+                Random & 0.489 & 0.487\\
+                DecisionTree & 0.012 & 0.241\\
+                5-NN & 0.212 & 0.315
+        \end{tabular}
+\end{center}
+
+\paragraph{f)}
+
+The \(10\)-Fold Cross Validation errors were fairly similar, within a few percentage points of each other. Clearly \(K=1\) is
+overfitting, but severe underfitting does not seem to show up. Mild underfitting causes increased test errors after \(K=30\).
+Errors seemed to be lowest around the twenties and thirties, but there is a sharp downward spike which indicates that \(K=7\)
+is the best value by a small amount.
+
+\begin{figure}[H]
+        \begin{center}
+                \includegraphics[height=3.5in]{{{Problem4.2-f}}}
+                \caption{\(10\)-Fold Cross Validation with varying \(K\) in a \(K\)-NN classifier for problem 4.2f.}
+        \end{center}
+\end{figure}
+
+\paragraph{g)}
+
+The best max depth is \(6\). Here the test error is tied for lowest with the depth \(3\), but I chose to use \(6\)
+because the training error is lower at \(6\). After a max depth of \(6\) there is overfitting as the test error goes
+up while the training error goes down.
+
+\begin{figure}[H]
+        \begin{center}
+                \includegraphics[height=3.5in]{{{Problem4.2-g}}}
+                \caption{Cross Validation for varying max depths in a decision tree classifier for problem 4.2g.}
+        \end{center}
+\end{figure}
+
+\paragraph{h)}
+
+As the learning percentage increases, the training and test errors for the \(7\)-NN classifier both decrease. The test error
+for the decision tree also decreases. Both test errors decrease the most in the early stages of learning. The training
+error for the \(7\)-NN classifier decreases only slightly. The training error for the decision tree increases as the
+learning increases, because the tree is too simple to fit all the training data. This leads to more errors as more training
+cases appear.
+
+\begin{figure}[H]
+        \begin{center}
+                \includegraphics[height=3.5in]{{{Problem4.2-h}}}
+                \caption{Learning curves for a max depth \(6\) decision tree classifier and a \(7\)-NN classifier for problem 4.2h.}
+        \end{center}
+\end{figure}
 
 \end{document}
