@@ -107,10 +107,16 @@ class RandomClassifier(Classifier) :
             self -- an instance of self
         """
 
-        ### ========== TODO : START ========== ###
-        # part b: set self.probabilities_ according to the training set
+        self.probabilities_ = {}
 
-        ### ========== TODO : END ========== ###
+        for i in y.flat:
+            if i in self.probabilities_:
+                self.probabilities_[i]=self.probabilities_[i]+1
+            else:
+                self.probabilities_[i]=1
+
+        for i in self.probabilities_.keys():
+            self.probabilities_[i]=self.probabilities_[i]/float(y.size)
 
         return self
 
@@ -131,13 +137,8 @@ class RandomClassifier(Classifier) :
             raise Exception("Classifier not initialized. Perform a fit first.")
         np.random.seed(seed)
 
-        ### ========== TODO : START ========== ###
-        # part b: predict the class for each test example
-        # hint: use np.random.choice (be careful of the parameters)
-
-        y = None
-
-        ### ========== TODO : END ========== ###
+        n,d = X.shape
+        y = np.random.choice(self.probabilities_.keys(), n, p=self.probabilities_.values())
 
         return y
 
@@ -273,11 +274,14 @@ def main():
 
 
 
-    ### ========== TODO : START ========== ###
+    #========================================
     # part b: evaluate training error of Random classifier
     print('Classifying using Random...')
-
-    ### ========== TODO : END ========== ###
+    clf = RandomClassifier()       # create Random classifier, which includes all model parameters
+    clf.fit(X, y)                  # fit training data using the classifier
+    y_pred = clf.predict(X)        # take the classifier and run it on the training data
+    train_error = 1 - metrics.accuracy_score(y, y_pred, normalize=True)
+    print('\t-- training error: %.3f' % train_error)
 
 
 
