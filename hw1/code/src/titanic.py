@@ -378,11 +378,28 @@ def main():
 
 
 
-    ### ========== TODO : START ========== ###
+    #========================================
     # part g: investigate decision tree classifier with various depths
     print('Investigating depths...')
-
-    ### ========== TODO : END ========== ###
+    xPlot=[]
+    trainErrorPlot=[]
+    testErrorPlot=[]
+    for i in range(1,21):
+        clf = DecisionTreeClassifier(criterion='entropy', max_depth=i)
+        trainError, testError= error(clf, X, y)
+        print('\t-- Max-Depth %d Decision Tree 80/20 cross validation training error: %.3f \t testing error: %.3f' % (i, trainError, testError))
+        xPlot.append(i)
+        trainErrorPlot.append(trainError)
+        testErrorPlot.append(testError)
+    #line1, =plt.plot(xPlot, trainErrorPlot, '-', label='Training Error')
+    #line2, =plt.plot(xPlot, testErrorPlot, '-', label='Test Error')
+    #plt.axis('auto')
+    #plt.xlabel('Max Depth')
+    #plt.ylabel('Average Error')
+    #plt.legend(loc='lower left')
+    #plt.title('Max-Depth Decision Tree Classifier 80/20 Cross Validation For Titanic Data')
+    #plt.savefig("Problem4.2-g.pdf")
+    #plt.clf()
 
 
 
