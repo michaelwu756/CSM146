@@ -222,14 +222,20 @@ def error(clf, X, y, ntrials=100, test_size=0.2) :
         test_error  -- float, test error
     """
 
-    ### ========== TODO : START ========== ###
     # compute cross-validation error over ntrials
     # hint: use train_test_split (be careful of the parameters)
-
     train_error = 0
     test_error = 0
+    for i in range(0, ntrials):
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=i)
+        clf.fit(X_train, y_train)
+        y_pred = clf.predict(X_train)
+        train_error += 1- metrics.accuracy_score(y_train, y_pred, normalize=True)
+        y_pred = clf.predict(X_test)
+        test_error += 1- metrics.accuracy_score(y_test, y_pred, normalize=True)
 
-    ### ========== TODO : END ========== ###
+    train_error /= ntrials
+    test_error /= ntrials
 
     return train_error, test_error
 
@@ -333,11 +339,21 @@ def main():
 
 
 
-    ### ========== TODO : START ========== ###
+    #========================================
     # part e: use cross-validation to compute average training and test error of classifiers
     print('Investigating various classifiers...')
-
-    ### ========== TODO : END ========== ###
+    clf = MajorityVoteClassifier()
+    train_error, test_error = error(clf, X, y)
+    print('\t-- MajorityVote training error: %.3f \t testing error: %.3f' % (train_error, test_error))
+    clf = RandomClassifier()
+    train_error, test_error = error(clf, X, y)
+    print('\t-- Random training error: %.3f \t testing error: %.3f' % (train_error, test_error))
+    clf = DecisionTreeClassifier(criterion='entropy')
+    train_error, test_error = error(clf, X, y)
+    print('\t-- DecisionTree training error: %.3f \t testing error: %.3f' % (train_error, test_error))
+    clf = KNeighborsClassifier(n_neighbors=5)
+    train_error, test_error = error(clf, X, y)
+    print('\t-- 5-NN training error: %.3f \t testing error: %.3f' % (train_error, test_error))
 
 
 
