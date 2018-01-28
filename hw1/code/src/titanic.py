@@ -357,11 +357,24 @@ def main():
 
 
 
-    ### ========== TODO : START ========== ###
+    #========================================
     # part f: use 10-fold cross-validation to find the best value of k for k-Nearest Neighbors classifier
     print('Finding the best k for KNeighbors classifier...')
-
-    ### ========== TODO : END ========== ###
+    xPlot=[]
+    yPlot=[]
+    for i in range(1,50,2):
+        clf = KNeighborsClassifier(n_neighbors=i)
+        scores = cross_val_score(clf, X, y, cv=10, scoring='accuracy')
+        print('\t-- %d-NN 10-fold cross validation error: %.3f' % (i, 1-scores.mean()))
+        xPlot.append(i)
+        yPlot.append(1-scores.mean())
+    #plt.plot(xPlot, yPlot, '-')
+    #plt.axis('auto')
+    #plt.xlabel('K')
+    #plt.ylabel('10-Fold Cross Validation Average Error')
+    #plt.title('K-NN Classifier 10-Fold Cross Validation For Titanic Data')
+    #plt.savefig("Problem4.2-f.pdf")
+    #plt.clf()
 
 
 
