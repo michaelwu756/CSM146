@@ -164,15 +164,13 @@ class PolynomialRegression() :
 
         # GD loop
         for t in xrange(tmax) :
-            ### ========== TODO : START ========== ###
             # part f: update step size
             # change the default eta in the function signature to 'eta=None'
             # and update the line below to your learning rate function
             if eta_input is None :
-                eta = 0.01
+                eta = 1/float(1+t)
             else :
                 eta = eta_input
-            ### ========== TODO : END ========== ###
 
             # part d: update theta (self.coef_) using one step of GD
             # hint: you can write simultaneously update all theta using vector math
@@ -338,6 +336,7 @@ def main() :
     start=time.time()
     reg.fit_GD(train_data.X, train_data.y, eta)
     end=time.time()
+    print("coefficients="+str(reg.coef_))
     print("cost="+str(reg.cost(train_data.X, train_data.y)))
     print("time="+str(end-start))
     print("")
@@ -347,6 +346,7 @@ def main() :
     start=time.time()
     reg.fit_GD(train_data.X, train_data.y, eta)
     end=time.time()
+    print("coefficients="+str(reg.coef_))
     print("cost="+str(reg.cost(train_data.X, train_data.y)))
     print("time="+str(end-start))
     print("")
@@ -356,6 +356,7 @@ def main() :
     start=time.time()
     reg.fit_GD(train_data.X, train_data.y, eta)
     end=time.time()
+    print("coefficients="+str(reg.coef_))
     print("cost="+str(reg.cost(train_data.X, train_data.y)))
     print("time="+str(end-start))
     print("")
@@ -365,6 +366,16 @@ def main() :
     start=time.time()
     reg.fit_GD(train_data.X, train_data.y, eta)
     end=time.time()
+    print("coefficients="+str(reg.coef_))
+    print("cost="+str(reg.cost(train_data.X, train_data.y)))
+    print("time="+str(end-start))
+    print("")
+
+    print("eta=1/(1+k)")
+    start=time.time()
+    reg.fit_GD(train_data.X, train_data.y)
+    end=time.time()
+    print("coefficients="+str(reg.coef_))
     print("cost="+str(reg.cost(train_data.X, train_data.y)))
     print("time="+str(end-start))
     print("")
@@ -373,6 +384,7 @@ def main() :
     start=time.time()
     reg.fit(train_data.X, train_data.y)
     end=time.time()
+    print("coefficients="+str(reg.coef_))
     print("cost="+str(reg.cost(train_data.X, train_data.y)))
     print("time="+str(end-start))
     print("")
