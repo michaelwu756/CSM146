@@ -109,13 +109,17 @@ class PolynomialRegression() :
 
         n,d = X.shape
 
-        ### ========== TODO : START ========== ###
         # part b: modify to create matrix for simple linear model
         # part g: modify to create matrix for polynomial model
-        Phi = X
         m = self.m_
-
-        ### ========== TODO : END ========== ###
+        Phi = np.zeros((n,m+1))
+        for i in range(0,n):
+            val=[1]
+            index=[(m+1)*i]
+            for j in range(0,m):
+                val.append(val[j]*X.flat[i])
+                index.append(index[j]+1)
+            np.put(Phi, index, val)
 
         return Phi
 
@@ -321,7 +325,8 @@ def main() :
     ### ========== TODO : START ========== ###
     # parts b-f: main code for linear regression
     print 'Investigating linear regression...'
-
+    reg=PolynomialRegression(1)
+    Phi=reg.generate_polynomial_features(train_data.X)
     ### ========== TODO : END ========== ###
 
 
