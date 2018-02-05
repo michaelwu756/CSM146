@@ -326,7 +326,6 @@ def main() :
     #plot_data(train_data.X, train_data.y, 'trainData.pdf')
     #plot_data(test_data.X, test_data.y, 'testData.pdf')
 
-    ### ========== TODO : START ========== ###
     # parts b-f: main code for linear regression
     print 'Investigating linear regression...'
     import time
@@ -388,9 +387,6 @@ def main() :
     print("cost="+str(reg.cost(train_data.X, train_data.y)))
     print("time="+str(end-start))
     print("")
-    ### ========== TODO : END ========== ###
-
-
 
     ### ========== TODO : START ========== ###
     # parts g-i: main code for polynomial regression
