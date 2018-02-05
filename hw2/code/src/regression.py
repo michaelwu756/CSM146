@@ -388,12 +388,30 @@ def main() :
     print("time="+str(end-start))
     print("")
 
-    ### ========== TODO : START ========== ###
     # parts g-i: main code for polynomial regression
     print 'Investigating polynomial regression...'
-
-    ### ========== TODO : END ========== ###
-
+    mPlot=[]
+    trainRMSE=[]
+    testRMSE=[]
+    for m in range(0,11):
+        reg=PolynomialRegression(m)
+        reg.fit(train_data.X, train_data.y)
+        print("m="+str(m))
+        print("train RMSE="+str(reg.rms_error(train_data.X, train_data.y)))
+        print("test RMSE="+str(reg.rms_error(test_data.X, test_data.y)))
+        print("")
+        mPlot.append(m)
+        trainRMSE.append(reg.rms_error(train_data.X, train_data.y))
+        testRMSE.append(reg.rms_error(test_data.X, test_data.y))
+    #line1, =plt.plot(mPlot, trainRMSE, '-', label='Training RMSE')
+    #line2, =plt.plot(mPlot, testRMSE, '-', label='Testing RMSE')
+    #plt.axis('auto')
+    #plt.xlabel('m')
+    #plt.ylabel('Root Mean Squared Error')
+    #plt.legend(loc='best')
+    #plt.title('Errors for Polynomial Regression of Degree m')
+    #plt.savefig("polynomialRegression.pdf")
+    #plt.clf()
 
     print "Done!"
 
