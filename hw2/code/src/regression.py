@@ -269,10 +269,13 @@ class PolynomialRegression() :
         --------------------
             cost    -- float, objective J(theta)
         """
-        ### ========== TODO : START ========== ###
         # part d: compute J(theta)
+        n,d = X.shape
+        y_pred=self.predict(X)
         cost = 0
-        ### ========== TODO : END ========== ###
+        for i in range(0,n):
+            cost+=(y_pred.flat[i]-y.flat[i])**2
+
         return cost
 
 
@@ -327,6 +330,8 @@ def main() :
     # parts b-f: main code for linear regression
     print 'Investigating linear regression...'
     reg=PolynomialRegression(1)
+    reg.coef_ = np.zeros(2)
+    print(reg.cost(train_data.X, train_data.y))
     Phi=reg.generate_polynomial_features(train_data.X)
     ### ========== TODO : END ========== ###
 
