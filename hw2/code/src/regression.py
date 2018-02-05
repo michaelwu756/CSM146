@@ -3,6 +3,7 @@
 
 # python libraries
 import os
+import math
 
 # numpy libraries
 import numpy as np
@@ -292,10 +293,9 @@ class PolynomialRegression() :
         --------------------
             error   -- float, RMSE
         """
-        ### ========== TODO : START ========== ###
         # part h: compute RMSE
-        error = 0
-        ### ========== TODO : END ========== ###
+        n,d = X.shape
+        error = math.sqrt(self.cost(X,y)/n)
         return error
 
 
