@@ -57,11 +57,14 @@ class Data :
         if 'color' not in kwargs :
             kwargs['color'] = 'b'
 
-        plt.clf()
         plt.scatter(self.X, self.y, **kwargs)
         plt.xlabel('x', fontsize = 16)
         plt.ylabel('y', fontsize = 16)
-        plt.savefig(name)
+        if name==None:
+            plt.show()
+        else:
+            plt.savefig(name)
+            plt.clf()
 
 # wrapper functions around Data class
 def load_data(filename) :
@@ -69,7 +72,7 @@ def load_data(filename) :
     data.load(filename)
     return data
 
-def plot_data(X, y, name, **kwargs) :
+def plot_data(X, y, name=None, **kwargs) :
     data = Data(X, y)
     data.plot(name, **kwargs)
 
@@ -166,20 +169,21 @@ class PolynomialRegression() :
             # change the default eta in the function signature to 'eta=None'
             # and update the line below to your learning rate function
             if eta_input is None :
-                eta = None # change this line
+                eta = 0.01
             else :
                 eta = eta_input
             ### ========== TODO : END ========== ###
 
-            ### ========== TODO : START ========== ###
             # part d: update theta (self.coef_) using one step of GD
             # hint: you can write simultaneously update all theta using vector math
 
             # track error
             # hint: you cannot use self.predict(...) to make the predictions
-            y_pred = y # change this line
+            y_pred = np.zeros(n)
+            for i in range(0,n):
+                np.put(y_pred,i,np.dot(X[i],self.coef_))
+            self.coef_=self.coef_-2*eta*np.dot(y_pred-y,X)
             err_list[t] = np.sum(np.power(y - y_pred, 2)) / float(n)
-            ### ========== TODO : END ========== ###
 
             # stop?
             if t > 0 and abs(err_list[t] - err_list[t-1]) <= eps :
@@ -330,8 +334,22 @@ def main() :
     # parts b-f: main code for linear regression
     print 'Investigating linear regression...'
     reg=PolynomialRegression(1)
-    reg.coef_ = np.zeros(2)
-    print(reg.cost(train_data.X, train_data.y))
+    eta=0.0001
+    print("eta="+str(eta))
+    reg.fit_GD(train_data.X, train_data.y, eta)
+    print("cost="+str(reg.cost(train_data.X, train_data.y)))
+    eta=0.001
+    print("eta="+str(eta))
+    reg.fit_GD(train_data.X, train_data.y, eta)
+    print("cost="+str(reg.cost(train_data.X, train_data.y)))
+    eta=0.01
+    print("eta="+str(eta))
+    reg.fit_GD(train_data.X, train_data.y, eta)
+    print("cost="+str(reg.cost(train_data.X, train_data.y)))
+    eta=0.0407
+    print("eta="+str(eta))
+    reg.fit_GD(train_data.X, train_data.y, eta)
+    print("cost="+str(reg.cost(train_data.X, train_data.y)))
     Phi=reg.generate_polynomial_features(train_data.X)
     ### ========== TODO : END ========== ###
 
