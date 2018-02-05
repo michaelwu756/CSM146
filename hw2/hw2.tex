@@ -72,7 +72,7 @@ No valid perceptron exists, because this data is not linearly separable.
         +(1-y_n)\left(\frac{e^{-\pmb{\theta}^T x_n }}{1+e^{-\pmb{\theta}^T x_n}}-1\right)\right]\\
         &=-\sum_{n=1}^N x_{nj}\left[\frac{e^{-\pmb{\theta}^T x_n }}{1+e^{-\pmb{\theta}^T x_n}}+y_n-1\right]\\
         &=-\sum_{n=1}^N x_{nj}\left(y_n-\frac{1}{1+e^{-\pmb{\theta}^T x_n}}\right)\\
-        &=-\sum_{n=1}^N x_{nj}\left(y_n-h_{\pmb{\theta}}(x_n)\right)
+        &=\sum_{n=1}^N x_{nj}\left(h_{\pmb{\theta}}(x_n)-y_n\right)
 \end{align*}
 
 \section*{Problem 3}
