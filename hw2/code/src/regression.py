@@ -226,12 +226,10 @@ class PolynomialRegression() :
 
         X = self.generate_polynomial_features(X) # map features
 
-        ### ========== TODO : START ========== ###
         # part e: implement closed-form solution
         # hint: use np.dot(...) and np.linalg.pinv(...)
         #       be sure to update self.coef_ with your solution
-
-        ### ========== TODO : END ========== ###
+        self.coef_=np.dot(np.linalg.pinv(np.dot(X.T,X)),np.dot(X.T,y))
 
 
     def predict(self, X) :
@@ -333,24 +331,51 @@ def main() :
     ### ========== TODO : START ========== ###
     # parts b-f: main code for linear regression
     print 'Investigating linear regression...'
+    import time
     reg=PolynomialRegression(1)
     eta=0.0001
     print("eta="+str(eta))
+    start=time.time()
     reg.fit_GD(train_data.X, train_data.y, eta)
+    end=time.time()
     print("cost="+str(reg.cost(train_data.X, train_data.y)))
+    print("time="+str(end-start))
+    print("")
+
     eta=0.001
     print("eta="+str(eta))
+    start=time.time()
     reg.fit_GD(train_data.X, train_data.y, eta)
+    end=time.time()
     print("cost="+str(reg.cost(train_data.X, train_data.y)))
+    print("time="+str(end-start))
+    print("")
+
     eta=0.01
     print("eta="+str(eta))
+    start=time.time()
     reg.fit_GD(train_data.X, train_data.y, eta)
+    end=time.time()
     print("cost="+str(reg.cost(train_data.X, train_data.y)))
+    print("time="+str(end-start))
+    print("")
+
     eta=0.0407
     print("eta="+str(eta))
+    start=time.time()
     reg.fit_GD(train_data.X, train_data.y, eta)
+    end=time.time()
     print("cost="+str(reg.cost(train_data.X, train_data.y)))
-    Phi=reg.generate_polynomial_features(train_data.X)
+    print("time="+str(end-start))
+    print("")
+
+    print("Closed form fit")
+    start=time.time()
+    reg.fit(train_data.X, train_data.y)
+    end=time.time()
+    print("cost="+str(reg.cost(train_data.X, train_data.y)))
+    print("time="+str(end-start))
+    print("")
     ### ========== TODO : END ========== ###
 
 
