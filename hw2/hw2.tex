@@ -117,5 +117,40 @@ Then we have a minimum at
 
 \section*{Problem 4}
 
+\paragraph{a)}
+
+Assume that our data set is finite, so we have for all \((x_i,y_i)\in D\) there exists a \(w\) and \(\theta\) such that
+\[y_i(w^Tx_i+\theta)>l\]
+where \(l\) is the margin between our separating line and the closest point in our data set. Then we can multiply our
+weight vector \(w\) and our threshold value \(\theta\) by \(\frac{1}{l}\) to get
+\[y_i\left(\frac{1}{l}w^Tx_i+\frac{\theta}{l}\right)>1\]
+Thus we can find a weight vector and threshold value that creates an optimal solution to the linear program with \(\delta=0\).
+
+\paragraph{b)}
+
+If we have an optimal solution to the linear problem, we have
+\[y_i\left(w^Tx_i+\theta\right)>1\]
+for all \((x_i,y_i)\in D\). In order for this to happen, \(y_i\) must always have the same sign as \(w^Tx_i+\theta\). Thus
+\[y_i=\begin{cases}
+        1 & \text{if }w^Tx_i+\theta\geq 0\\
+        -1 & \text{if }w^Tx_i+\theta<0
+\end{cases}\]
+for all \((x_i,y_i)\in D\), and so \(D\) is linearly separable.
+
+\paragraph{c)}
+
+If \(0<\delta<1\), then our data set is linearly separable, using the same argument as above. Otherwise we cannot say anything about
+if our data set is linearly separable.
+
+\paragraph{d)}
+
+An optimal solution is \(w=0\) and \(\theta=0\). Then
+\[y_i(w^Tx_i+\theta)\geq 0\]
+for any data set. The problem with this is that our resulting linear separator tells us nothing about our data set, as everything is
+zero.
+
+\paragraph{e)}
+
+A possible optimal solution is \(w=\left<1,1,1\right>\) and \(\theta=0\).
 
 \end{document}
