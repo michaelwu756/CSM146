@@ -21,4 +21,101 @@
 
 \paragraph{a)}
 
+We have the following points
+\[
+        \begin{array}{c c c}
+                x_1 & x_2 & y\\
+                \hline
+                -1 & -1 & -1\\
+                -1 & 1 & -1\\
+                1 & -1 & -1\\
+                1 & 1 & 1
+        \end{array}
+\]
+Initializing \(\pmb{\theta}=\left<0,0\right>\) and \(b=0\) and running the perceptron algorithm on this list from top to bottom yields
+\(\pmb{\theta}=\left<1,1\right>\) and \(b=-1\). Then
+\[y=\begin{cases}
+        1 & \text{if } \theta_1x_1+\theta_2x_2+b\geq0\\
+        -1 & \text{if } \theta_1x_1+\theta_2x_2+b<0
+\end{cases}\]
+which separates our training data perfectly. This is not the only unique way to separate our data, as if we chose \(\pmb{\theta}=\left<2,1\right>\)
+and \(b=-2\) this would be a valid perceptron as well.
+
+\paragraph{b)}
+
+We have the following points
+\[
+        \begin{array}{c c c}
+                x_1 & x_2 & y\\
+                \hline
+                -1 & -1 & -1\\
+                -1 & 1 & 1\\
+                1 & -1 & 1\\
+                1 & 1 & -1
+        \end{array}
+\]
+No valid perceptron exists, because this data is not linearly separable.
+
+\section*{Problem 2}
+
+\paragraph{a)}
+
+\begin{align*}
+        \frac{\partial J(\pmb{\theta})}{\partial \theta_j}
+        &=-\frac{\partial}{\partial \theta_j}\sum_{n=1}^N \left[y_n \ln\left(\frac{1}{1+e^{-\pmb{\theta}^T x_n}}\right)
+        +(1-y_n)\ln\left(\frac{e^{-\pmb{\theta}^T x_n}}{1+e^{-\pmb{\theta}^T x_n}}\right)\right]\\
+        &=-\frac{\partial}{\partial \theta_j}\sum_{n=1}^N \left[-y_n \ln\left(1+e^{-\pmb{\theta}^T x_n}\right)
+        +(1-y_n)\left(-\pmb{\theta}^T x_n-\ln\left(1+e^{-\pmb{\theta}^T x_n}\right)\right)\right]\\
+        &=-\sum_{n=1}^N \left[y_nx_{nj}\frac{e^{-\pmb{\theta}^T x_n }}{1+e^{-\pmb{\theta}^T x_n}}
+        +(1-y_n)\left(-x_{nj}+x_{nj}\frac{e^{-\pmb{\theta}^T x_n }}{1+e^{-\pmb{\theta}^T x_n}}\right)\right]\\
+        &=-\sum_{n=1}^N x_{nj}\left[y_n\frac{e^{-\pmb{\theta}^T x_n }}{1+e^{-\pmb{\theta}^T x_n}}
+        +(1-y_n)\left(\frac{e^{-\pmb{\theta}^T x_n }}{1+e^{-\pmb{\theta}^T x_n}}-1\right)\right]\\
+        &=-\sum_{n=1}^N x_{nj}\left[\frac{e^{-\pmb{\theta}^T x_n }}{1+e^{-\pmb{\theta}^T x_n}}+y_n-1\right]\\
+        &=-\sum_{n=1}^N x_{nj}\left(y_n-\frac{1}{1+e^{-\pmb{\theta}^T x_n}}\right)\\
+        &=-\sum_{n=1}^N x_{nj}\left(y_n-h_{\pmb{\theta}}(x_n)\right)
+\end{align*}
+
+\section*{Problem 3}
+
+\paragraph{a)}
+
+\[\nabla J(\theta_0,\theta_1)=2\sum_{n=1}^N \left[w_n(\theta_0+\theta_1x_{n,1}-y_n)\left<1, x_{n,1}\right>\right]\]
+
+\paragraph{b)}
+
+First we will write out the partial derivative with respect to \(\theta_0\) and set it to zero.
+
+\begin{align*}
+        \frac{\partial J}{\partial \theta_0}=2\sum_{n=1}^N \left[w_n(\theta_0+\theta_1x_{n,1}-y_n)\right]&=0\\
+        \sum_{n=1}^N \left[w_n(\theta_0+\theta_1x_{n,1}-y_n)\right]&=0\\
+        \theta_0\sum_{n=1}^N w_n + \theta_1\sum_{n=1}^N w_nx_{n,1} - \sum_{n=1}^N w_ny_n&=0\\
+        a\theta_0 + b\theta_1 &= c
+\end{align*}
+where \(a=\sum_{n=1}^N w_n\), \(b=\sum_{n=1}^N w_nx_{n,1}\), and \(c=\sum_{n=1}^N w_ny_n\). Next we
+will write out the partial derivative with respect to \(\theta_1\) and set it to zero.
+\begin{align*}
+        \frac{\partial J}{\partial \theta_1}=2\sum_{n=1}^N \left[x_{n,1}w_n(\theta_0+\theta_1x_{n,1}-y_n)\right]&=0\\
+        \sum_{n=1}^N \left[x_{n,1}w_n(\theta_0+\theta_1x_{n,1}-y_n)\right]&=0\\
+        \theta_0\sum_{n=1}^N x_{n,1}w_n + \theta_1\sum_{n=1}^N w_nx_{n,1}^2 - \sum_{n=1}^N x_{n,1}w_ny_n&=0\\
+        b\theta_0 + d\theta_1 &= e
+\end{align*}
+where \(d=\sum_{n=1}^N w_nx_{n,1}^2\) and \(e=\sum_{n=1}^N x_{n,1}w_ny_n\). Then solving this system of equations gives
+\begin{align*}
+        \theta_0&=\frac{e-d\theta_1}{b}\\
+        \frac{a}{b}(e-d\theta_1)+b\theta_1&=c\\
+        \frac{ae}{b}+\left(b-\frac{ad}{b}\right)\theta_1&=c\\
+        \frac{b^2-ad}{b}\theta_1&=c-\frac{ae}{b}\\
+        \theta_1&=\frac{bc-ae}{b^2-ad}
+\end{align*}
+\begin{align*}
+        \theta_0&=\frac{e-d\frac{bc-ae}{b^2-ad}}{b}\\
+        \theta_0&=\frac{eb^2-ade-bcd+ade}{b^3-abd}\\
+        \theta_0&=\frac{eb-cd}{b^2-ad}
+\end{align*}
+Then we have a minimum at
+\[(\theta_0,\theta_1)=\frac{1}{b^2-ad}\left<eb-cd, bc-ae\right>\]
+
+\section*{Problem 4}
+
+
 \end{document}
