@@ -247,10 +247,11 @@ class PolynomialRegression() :
 
         X = self.generate_polynomial_features(X) # map features
 
-        ### ========== TODO : START ========== ###
         # part c: predict y
-        y = None
-        ### ========== TODO : END ========== ###
+        n,d = X.shape
+        y = np.zeros(n)
+        for i in range(0,n):
+            np.put(y,i,np.dot(X[i],self.coef_))
 
         return y
 
