@@ -206,8 +206,8 @@ The results of the different \(\eta\) values are as follows.
                 \hline
                 0.0001 & 2.2704 & -2.4606 & 10000 & 4.0863 & 1.060399\\
                 0.001 & 2.4464 & -2.8163 & 7021 & 3.9125 & 0.794983\\
-                0.01 & 2.4464 & -2.8163 & 765 & 3.9125 & 0.0796790\\
-                0.0407 & -9.40*10^{18}& -4.65*10^{18} & 10000 & 2.7109*10^{39} & 1.042172\\
+                0.01 & 2.4464 & -2.8163 & 765 & 3.9125 & 0.079679\\
+                0.0407 & -9.40*10^{18}& -4.65*10^{18} & 10000 & 2.71*10^{39} & 1.042172\\
                 \frac{1}{1+k} & 2.4464 & -2.8163 & 1357 & 3.9125 & 0.142043\\
                 \text{Closed Form} & 2.4464 & -2.8163 & \text{N/A} & 3.9125 & 0.000560\\
         \end{array}
@@ -218,7 +218,7 @@ The larger step sizes converged quicker, until \(\eta=0.0407\) when the step siz
 
 The closed form solution is
 \[\theta=\left(\mathbf{X}^T\mathbf{X}\right)^{-1}\mathbf{X}^T\mathbf{y}\]
-The coefficients obtained match the ones obtained with gradient descent, though the runtimes were about two to four orders of magnitude
+The coefficients obtained match the ones obtained with gradient descent, though the runtime was about two to four orders of magnitude
 faster.
 
 \paragraph{f)}
