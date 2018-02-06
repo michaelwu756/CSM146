@@ -153,4 +153,99 @@ zero.
 
 A possible optimal solution is \(w=\left<1,1,1\right>\) and \(\theta=0\).
 
+\section*{Problem 5}
+
+\paragraph{a)}
+
+The data seems to be negatively correlated, with most points in the bottom right and top left. I believe
+linear regression will do a relatively good job of fitting the data.
+
+\begin{figure}[H]
+        \begin{center}
+                \includegraphics[height=2.5in]{trainData}
+                \caption{Plot of training data.}
+        \end{center}
+\end{figure}
+
+\begin{figure}[H]
+        \begin{center}
+                \includegraphics[height=2.5in]{testData}
+                \caption{Plot of testing data.}
+        \end{center}
+\end{figure}
+
+\paragraph{b)}
+
+I implemented this using the following code
+
+\begin{verbatim}
+m = self.m_
+Phi = np.zeros((n,m+1))
+for i in range(0,n):
+    val=[1]
+    index=[(m+1)*i]
+    for j in range(0,m):
+        val.append(val[j]*X.flat[i])
+        index.append(index[j]+1)
+    np.put(Phi, index, val)
+
+return Phi
+\end{verbatim}
+This took care of creating feature vectors for linear regression as well as polynomial regression.
+
+\paragraph{c)}
+
+I simply computed the dot product of each feature vector with the weights in order to make a prediction for \(y\).
+
+\paragraph{d)}
+
+The results of the different \(\eta\) values are as follows.
+\[
+        \begin{array}{c | c c c c c}
+                \eta & \theta_0 & \theta_1 & \text{Iterations} & J(\theta) & \text{Runtime}\\
+                \hline
+                0.0001 & 2.2704 & -2.4606 & 10000 & 4.0863 & 1.060399\\
+                0.001 & 2.4464 & -2.8163 & 7021 & 3.9125 & 0.794983\\
+                0.01 & 2.4464 & -2.8163 & 765 & 3.9125 & 0.0796790\\
+                0.0407 & -9.40*10^{18}& -4.65*10^{18} & 10000 & 2.7109*10^{39} & 1.042172\\
+                \frac{1}{1+k} & 2.4464 & -2.8163 & 1357 & 3.9125 & 0.142043\\
+                \text{Closed Form} & 2.4464 & -2.8163 & \text{N/A} & 3.9125 & 0.000560\\
+        \end{array}
+\]
+The larger step sizes converged quicker, until \(\eta=0.0407\) when the step size became too large.
+
+\paragraph{e)}
+
+The closed form solution is
+\[\theta=\left(\mathbf{X}^T\mathbf{X}\right)^{-1}\mathbf{X}^T\mathbf{y}\]
+The coefficients obtained match the ones obtained with gradient descent, though the runtimes were about two to four orders of magnitude
+faster.
+
+\paragraph{f)}
+
+It took \(1357\) iterations and \(0.142043\) seconds for our algorithm with our proposed learning rate to converge.
+
+\paragraph{g)}
+
+I already implemented this in part b.
+
+\paragraph{h)}
+
+We use RMSE because \(J(\theta)\) increases with more training data, which we do not want because it makes it harder to judge how accurate our
+fit is. RMSE is an average. Additionally, \(J(\theta)\) scales with the square of our error, so we want to take the square root in order to make
+our error scale more linearly.
+
+\paragraph{i)}
+
+The polynomial of degree \(m=5\) best fits our data, with the smallest test RMSE of \(0.355137742884\). There is evidence of underfitting
+on the left of the plot, because both training and testing errors are higher there. There is evidence of overfitting on the right, as our
+training error decreases and our test error increases there.
+
+\begin{figure}[H]
+        \begin{center}
+                \includegraphics[height=2.5in]{polynomialRegression}
+                \caption{Plot of how well polynomial regressions of varying degrees fits our data.}
+        \end{center}
+\end{figure}
+
 \end{document}
