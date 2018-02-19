@@ -141,10 +141,14 @@ def performance(y_true, y_pred, metric="accuracy"):
     y_label = np.sign(y_pred)
     y_label[y_label==0] = 1
 
-    ### ========== TODO : START ========== ###
-    # part 2a: compute classifier performance
-    return 0
-    ### ========== TODO : END ========== ###
+    score = 0
+    if metric=="accuracy":
+        score=metrics.accuracy_score(y_true,y_label)
+    if metric=="f1-score":
+        score=metrics.f1_score(y_true,y_label)
+    if metric=="auroc":
+        score=metrics.roc_auc_score(y_true,y_pred)
+    return score
 
 
 def cv_performance(clf, X, y, kf, metric="accuracy"):
