@@ -173,7 +173,7 @@ def cv_performance(clf, X, y, kf, metric="accuracy"):
         score   -- float, average cross-validation performance across k folds
     """
 
-    return cross_val_score(clf, X, y, kf, scoring=metric)
+    return cross_val_score(clf, X, y, kf, scoring=metric).mean()
 
 
 def select_param_linear(X, y, kf, metric="accuracy"):
