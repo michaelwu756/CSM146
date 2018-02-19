@@ -1,3 +1,4 @@
+#!/usr/bin/python
 """
 Author      : Yi-Chieh Wu, Sriram Sankararman
 Description : Twitter
