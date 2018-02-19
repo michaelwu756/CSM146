@@ -1,16 +1,5 @@
 \documentclass[12pt]{article}
 \usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{enumerate}
-\usepackage{pgfplots}
-\usepackage{calc}
-\usepackage{graphicx}
-\usepackage{float}
-\usepackage{hyperref}
-\usepackage{chngpage}
-\pgfplotsset{compat=1.12}
-\hypersetup{colorlinks,urlcolor=blue}
-\graphicspath{{./code/src/}}
 \begin{document}
 \title{Computer Science M146, Homework 2}
 \date{February 6th, 2018}
@@ -81,5 +70,148 @@ so our margin is exactly half of this distance. Our solution with offset has a h
 solution without offset.
 
 \section*{Problem 4}
+
+\subsection*{4.1}
+
+\paragraph{a)}
+
+I created the dictionary using the following code
+\begin{verbatim}
+word_list = {}
+count = 0
+with open(infile, 'rU') as fid :
+   for line in fid:
+      wordListLine = extract_words(line)
+      for word in wordListLine:
+         if word not in word_list:
+            word_list[word]=count
+            count+=1
+return word_list
+\end{verbatim}
+
+\paragraph{b)}
+
+I extracted the feature vectors using the following code
+\begin{verbatim}
+with open(infile, 'rU') as fid :
+lineNum=0
+for line in fid:
+   wordListLine = extract_words(line)
+   for word in wordListLine:
+      feature_matrix[lineNum,word_list[word]]=1
+   lineNum+=1
+return feature_matrix
+\end{verbatim}
+
+\paragraph{c)}
+
+I split the features and labels into train and test sets using the following code
+\begin{verbatim}
+trainX = X[0:560]
+trainy = y[0:560]
+testX = X[560:630]
+testy = y[560:630]
+\end{verbatim}
+
+\paragraph{d)}
+
+The feature matrix has the dimensions \((630,1811)\). The trainX set has dimensions \((560,1811)\), the trainy set has
+dimensions \((560,1)\), the testX set has dimensions \((70,1811)\), and the testy set has the dimensions \((70,1)\).
+
+\subsection*{4.2}
+
+\paragraph{a)}
+
+I implemented performance using the following code
+\begin{verbatim}
+score = 0
+if metric=="accuracy":
+   score=metrics.accuracy_score(y_true,y_label)
+if metric=="f1-score":
+   score=metrics.f1_score(y_true,y_label)
+if metric=="auroc":
+   score=metrics.roc_auc_score(y_true,y_pred)
+return score
+\end{verbatim}
+
+\paragraph{b)}
+
+I implemented cv\_performance using the following code
+\begin{verbatim}
+return cross_val_score(clf, X, y, scoring=metric, cv=kf).mean()
+\end{verbatim}
+and in main I added
+\begin{verbatim}
+kf=StratifiedKFold(trainy, 5)
+\end{verbatim}
+It is beneficial to use a stratified K-fold so that the percentage of positive and negative reviews are the same across folds
+because this ensures that our cross validation gets a good representation of our training data in each fold. Otherwise
+we may accidentally divide the folds such that one gets a small number of negative or positive reviews, making our classifier
+performance inaccurate.
+
+\paragraph{c)}
+
+I implemented select\_param\_linear with the following code
+\begin{verbatim}
+best=0
+cBest=0
+for c in C_range:
+   score=cv_performance(SVC(kernel="linear",C=c),X,y,kf,metric)
+   print "C="+str(c)+" score="+str(score)
+   if score>best:
+      best=score
+      cBest=c
+return cBest
+\end{verbatim}
+
+\paragraph{d)}
+
+My results were as follows
+\[
+        \begin{array}{c|c c c}
+                C & \text{accuracy} & \text{F1-score} & \text{AUROC}\\
+                \hline
+                10^{-3} & 0.7089 & 0.8297 & 0.8105\\
+                10^{-2} & 0.7107 & 0.8306 & 0.8111\\
+                10^{-1} & 0.8060 & 0.8755 & 0.8576\\
+                10^0 & 0.8146 & 0.8749 & 0.8712\\
+                10^1 & 0.8182 & 0.8766 & 0.8696\\
+                10^2 & 0.8182 & 0.8766 & 0.8696\\
+                \hline
+                \text{best } C & 10^1 & 10^1 & 10^0
+        \end{array}
+\]
+
+\subsection*{4.3}
+
+\paragraph{a)}
+
+I chose the hyperparameter \(c=10\) and trained my classifier using the following code
+\begin{verbatim}
+clf=SVC(kernel="linear", C=10)
+clf.fit(trainX, trainy)
+\end{verbatim}
+
+\paragraph{b)}
+
+I implemented performance\_test using the following code
+\begin{verbatim}
+y_pred=clf.decision_function(X)
+print "Performance test with metric "+str(metric)+":"
+return performance(y, y_pred, metric)
+\end{verbatim}
+
+\paragraph{c)}
+
+My results were as follows
+\[
+        \begin{array}{c c}
+                \text{metric} & \text{score}\\
+                \hline
+                \text{accuracy} & 0.7429\\
+                \text{F1-score} & 0.4375\\
+                \text{AUROC} & 0.7454
+        \end{array}
+\]
 
 \end{document}
