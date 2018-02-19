@@ -61,6 +61,25 @@ such that \(\phi_\beta(\mathbf{x})=\phi_1(\sqrt{\beta}\mathbf{x})\).
 
 \section*{Problem 3}
 
+\paragraph{a)}
+
+We wish to find \(\mathbf{w}^*=\left<w_1,w_2\right>\) such that we minimize \(\frac{1}{2}\sqrt{w_1^2+w_2^2}\) subject to \(w_1+w_2\geq 1\) and \(-w_1\geq 1\).
+Equivalently we would like to find the point closest to the origin such that \(w_2\geq 1-w_1\) and \(w_1\leq -1\). Thus we get
+\[\mathbf{w}^*=\left<-1,2\right>\]
+and the margin is \(\gamma=\frac{1}{\sqrt{5}}\).
+
+\paragraph{b)}
+
+We wish to find \(\mathbf{w}^*=\left<w_1,w_2\right>\) such that we minimize \(\frac{1}{2}\sqrt{w_1^2+w_2^2}\) subject to \(w_1+w_2+b\geq 1\) and \(-w_1-b\geq 1\).
+The classifier changes by making the decision boundary a horizontal line that crosses \(\left(0,\frac{1}{2}\right)\), and the margin will increase compared to our
+previous results. We get
+\[\mathbf{w}^*=\left<0,2\right>\]
+and
+\[b^*=-1\]
+Our margin is \(\gamma=\frac{1}{2}\). This makes sense because our two points \(\mathbf{x}_1=(1,1)\) and \(\mathbf{x}_2=(1,0)\) have a distance of \(1\) between them,
+so our margin is exactly half of this distance. Our solution with offset has a higher margin \(\gamma\) and smaller magnitude of \(\mathbf{w}^*\) than our
+solution without offset.
+
 \section*{Problem 4}
 
 \end{document}
