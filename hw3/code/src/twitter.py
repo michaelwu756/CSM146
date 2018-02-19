@@ -231,12 +231,9 @@ def performance_test(clf, X, y, metric="accuracy"):
         score        -- float, classifier performance
     """
 
-    ### ========== TODO : START ========== ###
-    # part 3: return performance on test data by first computing predictions and then calling performance
-
-    score = 0
-    return score
-    ### ========== TODO : END ========== ###
+    y_pred=clf.decision_function(X)
+    print "Performance test with metric "+str(metric)+":"
+    return performance(y, y_pred, metric)
 
 
 ######################################################################
@@ -253,7 +250,6 @@ def main() :
 
     metric_list = ["accuracy", "f1_score", "auroc"]
 
-    ### ========== TODO : START ========== ###
     trainX = X[0:560]
     trainy = y[0:560]
     testX = X[560:630]
@@ -264,12 +260,11 @@ def main() :
     print select_param_linear(trainX, trainy, kf, metric="f1")
     print select_param_linear(trainX, trainy, kf, metric="roc_auc")
 
-    # part 3: train linear-kernel SVMs with selected hyperparameters
-
-    # part 3: report performance on test data
-
-    ### ========== TODO : END ========== ###
-
+    clf=SVC(kernel="linear", C=10)
+    clf.fit(trainX, trainy)
+    print performance_test(clf,testX,testy, metric="accuracy")
+    print performance_test(clf,testX,testy, metric="f1-score")
+    print performance_test(clf,testX,testy, metric="auroc")
 
 if __name__ == "__main__" :
     main()
