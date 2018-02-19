@@ -199,10 +199,13 @@ def select_param_linear(X, y, kf, metric="accuracy"):
     print 'Linear SVM Hyperparameter Selection based on ' + str(metric) + ':'
     C_range = 10.0 ** np.arange(-3, 3)
 
-    ### ========== TODO : START ========== ###
-    # part 2: select optimal hyperparameter using cross-validation
-    return 1.0
-    ### ========== TODO : END ========== ###
+    best=0
+    cBest=0
+    for c in C_range:
+        if cv_performance(SVC(kernel="linear",C=c)X,y,kf,metric)>best:
+            best=cv_performance(SVC(kernel="linear",C=c)X,y,kf,metric)
+            cBest=c
+    return cBest
 
 
 
