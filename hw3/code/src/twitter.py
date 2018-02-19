@@ -12,6 +12,7 @@ import numpy as np
 # (this makes ``continuous-valued'' predictions)
 from sklearn.svm import SVC
 from sklearn.cross_validation import StratifiedKFold
+from sklearn.cross_validation import cross_val_score
 from sklearn import metrics
 
 ######################################################################
@@ -173,7 +174,7 @@ def cv_performance(clf, X, y, kf, metric="accuracy"):
         score   -- float, average cross-validation performance across k folds
     """
 
-    return cross_val_score(clf, X, y, kf, scoring=metric).mean()
+    return cross_val_score(clf, X, y, scoring=metric, cv=kf).mean()
 
 
 def select_param_linear(X, y, kf, metric="accuracy"):
@@ -202,8 +203,10 @@ def select_param_linear(X, y, kf, metric="accuracy"):
     best=0
     cBest=0
     for c in C_range:
-        if cv_performance(SVC(kernel="linear",C=c)X,y,kf,metric)>best:
-            best=cv_performance(SVC(kernel="linear",C=c)X,y,kf,metric)
+        score = cv_performance(SVC(kernel="linear",C=c),X,y,kf,metric)
+        print "C="+str(c)+" score="+str(score)
+        if score>best:
+            best=score
             cBest=c
     return cBest
 
@@ -256,9 +259,10 @@ def main() :
     testX = X[560:630]
     testy = y[560:630]
 
-    # part 2: create stratified folds (5-fold CV)
-
-    # part 2: for each metric, select optimal hyperparameter for linear-kernel SVM using CV
+    kf=StratifiedKFold(trainy, 5)
+    print select_param_linear(trainX, trainy, kf, metric="accuracy")
+    print select_param_linear(trainX, trainy, kf, metric="f1")
+    print select_param_linear(trainX, trainy, kf, metric="roc_auc")
 
     # part 3: train linear-kernel SVMs with selected hyperparameters
 
