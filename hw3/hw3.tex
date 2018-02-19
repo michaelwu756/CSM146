@@ -1,0 +1,51 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{enumerate}
+\usepackage{pgfplots}
+\usepackage{calc}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{chngpage}
+\pgfplotsset{compat=1.12}
+\hypersetup{colorlinks,urlcolor=blue}
+\graphicspath{{./code/src/}}
+\begin{document}
+\title{Computer Science M146, Homework 2}
+\date{February 6th, 2018}
+\author{Michael Wu\\UID: 404751542}
+\maketitle
+
+\section*{Problem 1}
+
+The VC dimension of \(H\) is \(3\). An example of \(3\) points \(x\) such that \(x\in R\) that can be shattered are \(x_1=-1\),
+\(x_2=0\), and \(x_3=1\). Then the following table shows how we can shatter these points, with \(h\in H\) being the classifier used.
+
+\[
+        \begin{array}{c c c c}
+                x_1 \text{ label}& x_2 \text{ label}& x_3 \text{ label} & h\\
+                \hline
+                0 & 0 & 0 & \operatorname{sgn}(-1)\\
+                0 & 0 & 1 & \operatorname{sgn}(x-0.5)\\
+                0 & 1 & 0 & \operatorname{sgn}(-x^2+0.5)\\
+                0 & 1 & 1 & \operatorname{sgn}(x+0.5)\\
+                1 & 0 & 0 & \operatorname{sgn}(-x-0.5)\\
+                1 & 0 & 1 & \operatorname{sgn}(x^2-0.5)\\
+                1 & 1 & 0 & \operatorname{sgn}(-x+0.5)\\
+                1 & 1 & 1 & \operatorname{sgn}(1)\\
+        \end{array}
+\]
+
+For any set \(S=\{x_1,x_2,x_3,x_4\}\) of four points where \(x_1<x_2<x_3<x_4\), we cannot shatter \(S\) if we label \(x_1=1\), \(x_2=0\),
+\(x_3=1\), \(x_4=0\). This is because any classifier in \(H\) at most splits \(R\) into three distinct regions where the quadratic
+\(ax^2+bx+c\) is above or below zero, and we have \(4\) distinct regions of classification in our set. So our hypothesis space cannot
+shatter \(S\) because no \(h\) can correctly classify this training set.
+
+\section*{Problem 2}
+
+\section*{Problem 3}
+
+\section*{Problem 4}
+
+\end{document}
