@@ -5,6 +5,7 @@ Description : Twitter
 """
 
 from string import punctuation
+from collections import OrderedDict
 
 import numpy as np
 
@@ -72,11 +73,14 @@ def extract_dictionary(infile):
     """
     
     word_list = {}
+    count = 0
     with open(infile, 'rU') as fid :
-        ### ========== TODO : START ========== ###
-        # part 1a: process each line to populate word_list
-        pass
-        ### ========== TODO : END ========== ###
+        for line in fid:
+            wordListLine = extract_words(line)
+            for word in wordListLine:
+                if word not in word_list:
+                    word_list[word]=count
+                    count+=1
 
     return word_list
 
@@ -236,6 +240,10 @@ def main() :
     
     # read the tweets and its labels   
     dictionary = extract_dictionary('../data/tweets.txt')
+    ordered = OrderedDict(sorted(dictionary.items(), key=lambda x: x[1]))
+    print ordered
+    for k,v in ordered.items():
+        print k,v
     X = extract_feature_vectors('../data/tweets.txt', dictionary)
     y = read_vector_file('../data/labels.txt')
     
