@@ -247,7 +247,10 @@ def main() :
     metric_list = ["accuracy", "f1_score", "auroc"]
 
     ### ========== TODO : START ========== ###
-    # part 1: split data into training (training + cross-validation) and testing set
+    trainX = X[0:560]
+    trainy = y[0:560]
+    testX = X[560:630]
+    testy = y[560:630]
 
     # part 2: create stratified folds (5-fold CV)
 
