@@ -45,6 +45,23 @@ Thus we have
 \[\phi_\beta(\mathbf{x})=\left<1,\sqrt{3\beta}x_i\Big|_{i=1}^D,\sqrt{3}\beta x_ix_j\Big|_{i,j=1}^D,\beta^\frac{3}{2} x_ix_jx_k\Big|_{i,j,k=1}^D\right>\]
 The kernel \(K(\mathbf{x},\mathbf{z})=(1+\mathbf{x}\cdot\mathbf{z})^3\) is equivalent to setting \(\beta=1\), and corresponds to the feature map
 \[\phi_1(\mathbf{x})=\left<1,\sqrt{3}x_i\Big|_{i=1}^D,\sqrt{3} x_ix_j\Big|_{i,j=1}^D,x_ix_jx_k\Big|_{i,j,k=1}^D\right>\]
+For \(D=2\) this is
+\begin{align*}
+        \phi_\beta(\mathbf{x})&=\left<1,\sqrt{3\beta}x_1,\sqrt{3\beta}x_2,\sqrt{3}\beta x_1^2,\sqrt{3}\beta x_1x_2,\sqrt{3}\beta x_2x_1,\sqrt{3}\beta x_2^2,\right.\\
+        &\left.\qquad\beta^\frac{3}{2}x_1^3,\beta^\frac{3}{2}x_1^2x_2,\beta^\frac{3}{2}x_1^2x_2,\beta^\frac{3}{2}x_1x_2^2,
+        \beta^\frac{3}{2}x_1^2x_2,\beta^\frac{3}{2}x_1x_2^2,\beta^\frac{3}{2}x_1x_2^2,\beta^\frac{3}{2}x_2^3\right>\\
+        \phi_1(\mathbf{x})&=\left<1,\sqrt{3}x_1,\sqrt{3}x_2,\sqrt{3}x_1^2,\sqrt{3} x_1x_2,\sqrt{3}x_2x_1,\sqrt{3}x_2^2,\right.\\
+        &\left.\qquad\vphantom{\sqrt{1}}x_1^3,x_1^2x_2,x_1^2x_2,x_1x_2^2,x_1^2x_2,x_1x_2^2,x_1x_2^2,x_2^3\right>
+\end{align*}
+
+Note that we allow duplicate terms in order to have a nicer formula for the general case of any \(D\). If we were to simplify \(K_\beta\) for \(D=2\), we would get
+the feature maps
+\begin{align*}
+        \phi_\beta(\mathbf{x})&=\left<1,\sqrt{3\beta}x_1,\sqrt{3\beta}x_2,\sqrt{3}\beta x_1^2,\sqrt{6}\beta x_1x_2,\sqrt{3}\beta x_2^2,\right.\\
+        &\left.\qquad\beta^\frac{3}{2}x_1^3,\sqrt{3}\beta^\frac{3}{2}x_1^2x_2,\sqrt{3}\beta^\frac{3}{2}x_1x_2^2,\beta^\frac{3}{2}x_2^3\right>\\
+        \phi_1(\mathbf{x})&=\left<1,\sqrt{3}x_1,\sqrt{3}x_2,\sqrt{3}x_1^2,\sqrt{6}x_1x_2,\sqrt{3}x_2^2,x_1^3,\sqrt{3}x_1^2x_2,\sqrt{3}x_1x_2^2,x_2^3\right>
+\end{align*}
+
 The parameter \(\beta\) scales the features up and down by a constant. It effectively replaces the vector \(\mathbf{x}\) by \(\sqrt{\beta}\mathbf{x}\)
 such that \(\phi_\beta(\mathbf{x})=\phi_1(\sqrt{\beta}\mathbf{x})\).
 
@@ -65,6 +82,7 @@ previous results. We get
 \[\mathbf{w}^*=\left<0,2\right>\]
 and
 \[b^*=-1\]
+
 Our margin is \(\gamma=\frac{1}{2}\). This makes sense because our two points \(\mathbf{x}_1=(1,1)\) and \(\mathbf{x}_2=(1,0)\) have a distance of \(1\) between them,
 so our margin is exactly half of this distance. Our solution with offset has a higher margin \(\gamma\) and smaller magnitude of \(\mathbf{w}^*\) than our
 solution without offset.
@@ -144,6 +162,7 @@ and in main I added
 \begin{verbatim}
 kf=StratifiedKFold(trainy, 5)
 \end{verbatim}
+
 It is beneficial to use a stratified K-fold so that the percentage of positive and negative reviews are the same across folds
 because this ensures that our cross validation gets a good representation of our training data in each fold. Otherwise
 we may accidentally divide the folds such that one gets a small number of negative or positive reviews, making our classifier
