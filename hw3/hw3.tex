@@ -112,12 +112,12 @@ return word_list
 I extracted the feature vectors using the following code
 \begin{verbatim}
 with open(infile, 'rU') as fid :
-lineNum=0
-for line in fid:
-   wordListLine = extract_words(line)
-   for word in wordListLine:
-      feature_matrix[lineNum,word_list[word]]=1
-   lineNum+=1
+   lineNum=0
+   for line in fid:
+      wordListLine = extract_words(line)
+      for word in wordListLine:
+         feature_matrix[lineNum,word_list[word]]=1
+      lineNum+=1
 return feature_matrix
 \end{verbatim}
 
