@@ -1,0 +1,139 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\begin{document}
+\title{Computer Science M146, Homework 4}
+\date{March 8th, 2018}
+\author{Michael Wu\\UID: 404751542}
+\maketitle
+
+\section*{Problem 1}
+
+We have the following data
+\begin{center}
+        \begin{tabular}{|c|c|c|c|}
+                \hline
+                {\em i}  & $x$  & $y$ & Label \\
+                \hline
+                {\em 1}  & 0  & 8 & $-$ \\
+                \hline
+                {\em 2}  & 1  & 4 & $-$ \\
+                \hline
+                {\em 3}  & 3  & 7 & $+$ \\
+                \hline
+                {\em 4}  & -2  & 1 & $-$ \\
+                \hline
+                {\em 5}  & -1  & 13 & $-$ \\
+                \hline
+                {\em 6}  & 9  & 11 & $-$ \\
+                \hline
+                {\em 7}  & 12 & 7 & $+$ \\
+                \hline
+                {\em 8}  & -7  & -1 & $-$ \\
+                \hline
+                {\em 9}  & -3  & 12 & $+$ \\
+                \hline
+                {\em 10} & 5  & 9 & $+$ \\
+                \hline
+        \end{tabular}
+\end{center}
+and after running our AdaBoost algorithm we get the following table.
+\begin{center}
+        \hspace*{-2cm}
+        \begin{tabular}{|c|c||c|c|c|c||c|c|c|c|}
+                \hline
+                & & \multicolumn{4}{c||}{Hypothesis 1 (1st iteration)}
+                & \multicolumn{4}{c|}{Hypothesis 2 (2nd iteration)} \\
+                \cline{3-10}
+                {\em i} & Label & $D_0$ & $f_1 \equiv $ & $f_2 \equiv $ & $h_1\equiv$ & $D_1$ &  $f_1 \equiv $ & $f_2 \equiv $ & $h_2 \equiv $ \\
+                & & & [$x > 2$] & [$y > 6$] & [$x > 2$] & & [$x > 11$] & [$y > 11 $] & [$y > 11$] \\
+                \tiny{(1)} & \tiny{(2)} & \tiny{(3)} & \tiny{(4)} &  \tiny{(5)} & \tiny{(6)} & \tiny{(7)} & \tiny{(8)} & \tiny{(9)} & \tiny{(10)}\\
+                \hline \hline
+                {\em 1} & $-$ & \(\frac{1}{10}\) & \(-\) & \(+\) & \(-\) & \(\frac{1}{16}\) & \(-\) & \(-\) & \(-\) \\
+                \hline
+                {\em 2} & $-$ & \(\frac{1}{10}\) & \(-\) & \(-\) & \(-\) & \(\frac{1}{16}\) & \(-\) & \(-\) & \(-\) \\
+                \hline
+                {\em 3} & $+$ & \(\frac{1}{10}\) & \(+\) & \(+\) & \(+\) & \(\frac{1}{16}\) & \(-\) & \(-\) & \(-\) \\
+                \hline
+                {\em 4} & $-$ & \(\frac{1}{10}\) & \(-\) & \(-\) & \(-\) & \(\frac{1}{16}\) & \(-\) & \(-\) & \(-\) \\
+                \hline
+                {\em 5} & $-$ & \(\frac{1}{10}\) & \(-\) & \(+\) & \(-\) & \(\frac{1}{16}\) & \(-\) & \(+\) & \(+\) \\
+                \hline
+                {\em 6} & $-$ & \(\frac{1}{10}\) & \(+\) & \(+\) & \(+\) & \(\frac{1}{4}\) & \(-\) & \(-\) & \(-\) \\
+                \hline
+                {\em 7} & $+$ & \(\frac{1}{10}\) & \(+\) & \(+\) & \(+\) & \(\frac{1}{16}\) & \(+\) & \(-\) & \(-\) \\
+                \hline
+                {\em 8} & $-$ & \(\frac{1}{10}\) & \(-\) & \(-\) & \(-\) & \(\frac{1}{16}\) & \(-\) & \(-\) & \(-\) \\
+                \hline
+                {\em 9} & $+$ & \(\frac{1}{10}\) & \(-\) & \(+\) & \(-\) & \(\frac{1}{4}\) & \(-\) & \(+\) & \(+\) \\
+                \hline
+                {\em 10} & $+$ & \(\frac{1}{10}\) & \(+\) & \(+\) & \(+\) & \(\frac{1}{16}\) & \(-\) & \(-\) & \(-\) \\
+                \hline
+        \end{tabular}
+        \hspace*{-2cm}
+\end{center}
+For the first iteration we get the error and vote
+\[\epsilon_1 = \frac{2}{10}\]
+\[\alpha_1 = \frac{1}{2}\log_2\left(\frac{1-\frac{2}{10}}{\frac{2}{10}}\right) = 1\]
+which allows us to generate the next weights
+\[D_1(i)=\frac{D_0(i)}{Z_1}2^{-\alpha_1y_ih_1(x_i)}=2^{-3-y_ih_1(x_i)}=\begin{cases}\frac{1}{4}&\text{if correct}\\ \frac{1}{16}&\text{if incorrect}\end{cases}\]
+For our second iteration we get the error and vote
+\[\epsilon_2 = \frac{1}{4}\]
+\[\alpha_2 = \frac{1}{2}\log_2\left(\frac{1-\frac{1}{4}}{\frac{1}{4}}\right) = \frac{\log_2(3)}{2}\]
+and combining these two gives us our final hypothesis
+\[H_\text{final}(x,y)=\operatorname{sgn}\left(h_1(x,y)+\frac{\log_2(3)}{2}h_2(x,y)\right)=\begin{cases}1&\text{if }x>2\\ -1&\text{if }x\leq 2\end{cases}\]
+which is the same as hypothesis \(h_1\) because \(\alpha_1>\alpha_2\), so \(h_1\) effectively overpowers \(h_2\).
+
+\section{Multi-class classification - 60 points}
+
+Consider a multi-class classification problem with $k$ class
+labels $\{1, 2, \ldots k\}$. Assume that we are given $m$
+examples, labeled with one of the $k$ class labels. Assume, for
+simplicity, that we have $m/k$ examples of each type.
+
+Assume that you have a learning algorithm $L$ that can be used
+to learn Boolean functions. (E.g., think about $L$ as the
+Perceptron algorithm). We would like to explore several ways to
+develop learning algorithms for the multi-class classification
+problem.
+
+There are two schemes to use the algorithm $L$ on the given data set, and produce a multi-class classification:
+\begin{itemize}
+\item {\bf One vs.~All:} For every label $i \in [1,k]$, a classifier is learned over the following data set: the examples labeled with the label $i$ are considered ``positive'', and examples labeled with any other class $j \in [1,k], j \neq i$ are considered ``negative''.
+\item {\bf All vs.~All:} For every pair of labels $\langle i, j \rangle$, a classifier is learned over the following data set: the examples labeled with one class $i \in [1,k]$ are considered ``positive'', and those labeled with the other class $j \in [1,k], j \neq i$ are considered ``negative''.
+\end{itemize}
+%
+\vspace{-3mm}
+\begin{enumerate}
+\item {\bf [20 points]} For each of these two schemes, answer the following:
+\begin{enumerate}
+\item How many classifiers do you learn?
+\item How many examples do you use to learn each classifier within the scheme?
+\item How will you decide the final class label (from \{1, 2, \ldots, k\}) for each example?
+\item What is the computational complexity of the training process?
+\end{enumerate}
+\item {\bf [5 points]} Based on your analysis above of two schemes individually, which scheme would you prefer? Justify.
+\item {\bf [5 points]} You could also use a \textsc{KernelPerceptron} for a two-class classification. We could also use the algorithm to learn a multi-class classification. Does using a \textsc{KernelPerceptron} change your analysis above? Specifically, what is the computational complexity of using a \textsc{KernelPerceptron} and which scheme would you prefer when using a \textsc{KernelPerceptron}? 
+
+\item {\bf [10 points]} We are given a magical black-box binary classification algorithm (we don’t know how it works, but it just does!) which has a learning time complexity of O($dn^2$), where $n$ is the total number of training examples supplied (positive+negative) and $d$ is the dimensionality of each example.
+What are the overall training time complexities of the all-vs-all and the one-vs-all
+paradigms, respectively, and which training paradigm is most efficient?
+
+\item {\bf [10 points]} We are now given another magical black-box binary classification algorithm (wow!) which has a learning time complexity of O($d^2 n$), where $n$ is the total number of training examples supplied (positive+negative) and $d$ is the dimensionality of each example.
+What are the overall training time complexities of the all-vs-all and the one-vs-all paradigms, respectively, and which training paradigm is most efficient, when using this new classifier?
+
+\item {\bf [10 points]} Suppose we have learnt an all-vs-all multi-class classifier and now want to proceed to predicting labels on unseen examples.
+
+We have learnt a simple linear classifier with a weight vector of dimensionality $d$ for each of the $ m(m-1)/2$ classes ($w_i^T x = 0$ is the simple linear classifier hyperplane for each  $i =[1, \cdots , m(m-1)/2] )$
+
+We have two evaluation strategies to choose from. For each example, we can:
+\begin{itemize}
+  \item \textbf{Counting}: Do all predictions then do a majority vote to decide class label
+  \item \textbf{Knockout}: Compare two classes at a time, if one loses, never consider it
+again. Repeat till only one class remains.
+\end{itemize}
+What are the overall evaluation time complexities per example for Counting and
+Knockout, respectively?
+\end{enumerate}
+
+
+\end{document}
