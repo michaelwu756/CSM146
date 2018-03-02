@@ -83,57 +83,53 @@ and combining these two gives us our final hypothesis
 \[H_\text{final}(x,y)=\operatorname{sgn}\left(h_1(x,y)+\frac{\log_2(3)}{2}h_2(x,y)\right)=\begin{cases}1&\text{if }x>2\\ -1&\text{if }x\leq 2\end{cases}\]
 which is the same as hypothesis \(h_1\) because \(\alpha_1>\alpha_2\), so \(h_1\) effectively overpowers \(h_2\).
 
-\section{Multi-class classification - 60 points}
+\section*{Problem 2}
 
-Consider a multi-class classification problem with $k$ class
-labels $\{1, 2, \ldots k\}$. Assume that we are given $m$
-examples, labeled with one of the $k$ class labels. Assume, for
-simplicity, that we have $m/k$ examples of each type.
+\paragraph{a)}
 
-Assume that you have a learning algorithm $L$ that can be used
-to learn Boolean functions. (E.g., think about $L$ as the
-Perceptron algorithm). We would like to explore several ways to
-develop learning algorithms for the multi-class classification
-problem.
-
-There are two schemes to use the algorithm $L$ on the given data set, and produce a multi-class classification:
-\begin{itemize}
-\item {\bf One vs.~All:} For every label $i \in [1,k]$, a classifier is learned over the following data set: the examples labeled with the label $i$ are considered ``positive'', and examples labeled with any other class $j \in [1,k], j \neq i$ are considered ``negative''.
-\item {\bf All vs.~All:} For every pair of labels $\langle i, j \rangle$, a classifier is learned over the following data set: the examples labeled with one class $i \in [1,k]$ are considered ``positive'', and those labeled with the other class $j \in [1,k], j \neq i$ are considered ``negative''.
-\end{itemize}
-%
-\vspace{-3mm}
 \begin{enumerate}
-\item {\bf [20 points]} For each of these two schemes, answer the following:
-\begin{enumerate}
-\item How many classifiers do you learn?
-\item How many examples do you use to learn each classifier within the scheme?
-\item How will you decide the final class label (from \{1, 2, \ldots, k\}) for each example?
-\item What is the computational complexity of the training process?
-\end{enumerate}
-\item {\bf [5 points]} Based on your analysis above of two schemes individually, which scheme would you prefer? Justify.
-\item {\bf [5 points]} You could also use a \textsc{KernelPerceptron} for a two-class classification. We could also use the algorithm to learn a multi-class classification. Does using a \textsc{KernelPerceptron} change your analysis above? Specifically, what is the computational complexity of using a \textsc{KernelPerceptron} and which scheme would you prefer when using a \textsc{KernelPerceptron}? 
+        \item One vs.\ All learns \(k\) classifiers, All vs.\ All learns \(\binom{k}{2}\) classifiers.
+        \item One vs.\ All uses \(m\) examples for each classifier, All vs.\ All uses \(2\frac{m}{k}\) examples for each classifier.
+        \item One vs.\ All will decide using the label for the classifier which most strongly classifies an example as positive. For a linear classifier
+                like perceptron this means the classifier with the maximum value of \(\mathbf{w}^T\mathbf{x}\), where \(\mathbf{w}^T\) is the learned weight vector
+                and \(\mathbf{x}\) is the example.
 
-\item {\bf [10 points]} We are given a magical black-box binary classification algorithm (we don’t know how it works, but it just does!) which has a learning time complexity of O($dn^2$), where $n$ is the total number of training examples supplied (positive+negative) and $d$ is the dimensionality of each example.
-What are the overall training time complexities of the all-vs-all and the one-vs-all
-paradigms, respectively, and which training paradigm is most efficient?
-
-\item {\bf [10 points]} We are now given another magical black-box binary classification algorithm (wow!) which has a learning time complexity of O($d^2 n$), where $n$ is the total number of training examples supplied (positive+negative) and $d$ is the dimensionality of each example.
-What are the overall training time complexities of the all-vs-all and the one-vs-all paradigms, respectively, and which training paradigm is most efficient, when using this new classifier?
-
-\item {\bf [10 points]} Suppose we have learnt an all-vs-all multi-class classifier and now want to proceed to predicting labels on unseen examples.
-
-We have learnt a simple linear classifier with a weight vector of dimensionality $d$ for each of the $ m(m-1)/2$ classes ($w_i^T x = 0$ is the simple linear classifier hyperplane for each  $i =[1, \cdots , m(m-1)/2] )$
-
-We have two evaluation strategies to choose from. For each example, we can:
-\begin{itemize}
-  \item \textbf{Counting}: Do all predictions then do a majority vote to decide class label
-  \item \textbf{Knockout}: Compare two classes at a time, if one loses, never consider it
-again. Repeat till only one class remains.
-\end{itemize}
-What are the overall evaluation time complexities per example for Counting and
-Knockout, respectively?
+                All vs.\ All will decide using the label that gets the most votes out of all the classifiers. This is a majority vote style of evaluation. A tournament
+                style of evaluation can also be used, where each label is tested only once and if it loses against the current label, it is not considered again. The winning
+                label moves on to the next round of the tournament, and the last label remaining is assigned to the example.
+        \item Assuming that the learning complexity of \(L\) is constant, the complexity of One vs.\ All is \(\Theta(k)\), because it needs to train \(k\) classifiers.
+                All vs.\ All is \(\Theta(k^2)\), because \(\binom{k}{2}\) scales with \(k^2\). However, due to the smaller number of examples in each
+                All vs.\ All classifier this may not be true in reality, as the learning complexity may vary with the number of examples for each classifier.
+                Assuming \(L\) is the perceptron algorithm, it has the complexity at least \(\Omega(n)\) when learning on a set of \(n\) examples, as it needs
+                to check every example once to determine convergence. Then One vs.\ All has \(\Omega(km)\) complexity since it uses \(m\) examples and All vs.\ All
+                has \(\Omega(km)\) complexity as well since it uses \(2\frac{m}{k}\) examples.
 \end{enumerate}
 
+\paragraph{b)}
+
+I would prefer One vs.\ All, as it is simpler than All vs.\ All. It is the most natural reduction of multi-class classification to binary classification. Although it cannot
+classify certain data sets where the data is not easily separable, it works well in practice. Additionally it requires learning fewer classifiers, so it is more intuitive
+to understand. Its best case performance is about the same as All vs.\ All, so we do not incur a large penalty for this choice.
+
+\paragraph{c)}
+
+Kernel perceptron needs to compute the kernel between every pair of points which is \(\Theta(n^2)\) complexity on \(n\) examples. Then One vs.\ All has \(\Omega(km^2)\)
+complexity and All vs.\ All has \(\Omega(m^2)\) complexity. So All vs.\ All benefits from the reduced amount of examples per classifier, leading it to have a faster training time.
+Thus I would choose All vs.\ All if I was using kernel perceptron.
+
+\paragraph{d)}
+
+One vs.\ All is \(O(kdm^2)\), and All vs.\ All is \(O(dm^2)\). This is because the number of examples per classifier scales inversely with \(k\) in All vs.\ All. Thus
+the All vs.\ All is more efficient.
+
+\paragraph{e)}
+
+One vs.\ All is \(O(kd^2m)\), and All vs.\ All is \(O(kd^2m)\). This is because the number of examples per classifier scales inversely with \(k\) in All vs.\ All. Thus
+they are equally efficient.
+
+\paragraph{f)}
+
+For counting, we need to calculate \(w_i^Tx\) for every \(\binom{m}{2}\) classifier. This takes \(O(dm^2)\) time. For knockout, we need to calculate \(w_i^Tx\) for \(m\) classifiers.
+This takes \(O(dm)\) time. Thus knockout is the faster evaluation method.
 
 \end{document}
