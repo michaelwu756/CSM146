@@ -1,3 +1,4 @@
+#!/usr/bin/python
 """
 Author      : Yi-Chieh Wu, Sriram Sankararaman
 Description : Famous Faces
