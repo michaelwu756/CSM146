@@ -81,7 +81,21 @@ where
         C_3&=\frac{\sum_{i=1}^m (1-y_i)a_i}{\sum_{i=1}^m (1-y_i)(a_i+b_i)}\\
         C_4&=\frac{\sum_{i=1}^m (1-y_i)c_i}{\sum_{i=1}^m (1-y_i)(b_i+c_i)}
 \end{align*}
-because of the symmetry of our log likelihood function \(\log \operatorname{P}(D_i, y_i)\).
+because of the symmetry of our log likelihood function \(\log \operatorname{P}(D_i, y_i)\). After some algebraic simplification
+these values become
+\begin{align*}
+        \alpha_1&=\frac{\sum_{i=1}^m y_ia_i}{\sum_{i=1}^m y_i(a_i+b_i+c_i)}\\
+        \beta_1&=\frac{\sum_{i=1}^m y_ib_i}{\sum_{i=1}^m y_i(a_i+b_i+c_i)}\\
+        \gamma_1&=\frac{\sum_{i=1}^m y_ic_i}{\sum_{i=1}^m y_i(a_i+b_i+c_i)}\\
+        \alpha_0&=\frac{\sum_{i=1}^m (1-y_i)a_i}{\sum_{i=1}^m (1-y_i)(a_i+b_i+c_i)}\\
+        \beta_0&=\frac{\sum_{i=1}^m (1-y_i)b_i}{\sum_{i=1}^m (1-y_i)(a_i+b_i+c_i)}\\
+        \gamma_0&=\frac{\sum_{i=1}^m (1-y_i)c_i}{\sum_{i=1}^m (1-y_i)(a_i+b_i+c_i)}\\
+\end{align*}
+such that \(\alpha_1\) is the total proportion of \(a\) words in the set of \(D_i\) that have label \(y_i=1\), \(\beta_1\) is the total
+proportion of \(b\) words in the set of \(D_i\) that have label \(y_i=1\), \(\gamma_1\) is the total proportion of \(c\) words in the set
+of \(D_i\) that have label \(y_i=1\), \(\alpha_0\) is the total proportion of \(a\) words in the set of \(D_i\) that have label \(y_i=0\),
+\(\beta_0\) is the total proportion of \(b\) words in the set of \(D_i\) that have label \(y_i=0\), and
+\(\gamma_0\) is the total proportion of \(c\) words in the set of \(D_i\) that have label \(y_i=0\).
 
 \section*{Problem 2}
 
