@@ -101,9 +101,43 @@ of \(D_i\) that have label \(y_i=1\), \(\alpha_0\) is the total proportion of \(
 
 \paragraph{a)}
 
+The two unspecified state transitions are
+\begin{align*}
+        q_{21}&=\operatorname{P}(q_{t+1}=2|q_t=1)=0\\
+        q_{22}&=\operatorname{P}(q_{t+1}=2|q_t=2)=0
+\end{align*}
+The two unspecified output probabilities are
+\begin{align*}
+        e_1(B)&=\operatorname{P}(O_t=B|q_t=1)=0.01\\
+        e_2(A)&=\operatorname{P}(O_t=A|q_t=2)=0.49
+\end{align*}
+
 \paragraph{b)}
 
+We have
+\[\operatorname{P}(A)=\pi_1e_1(A)+\pi_2e_2(A)=0.49\times0.99+0.51\times0.49=0.735\]
+We also have
+\[\operatorname{P}(B)=\pi_1e_1(B)+\pi_2e_2(B)=0.49\times0.01+0.51\times0.51=0.265\]
+Thus \(A\) will be the most frequent output symbol to appear in the first position of sequences generated from this HMM.
+
 \paragraph{c)}
+
+Consider any output sequence that begins after \(q_1\). Because the state transition probabilities are \(1\) for \(q_{11}\)
+and \(q_{12}\), any output sequence that begins after \(t=1\) must begin with state \(q_t=1\). After reaching state \(1\),
+the state must remain \(1\). Then the three letter sequences have the following probabilities
+\begin{align*}
+        \operatorname{P}(AAA)&=e_1(A)^3e_1(B)^0=0.970299\\
+        \operatorname{P}(AAB)&=e_1(A)^2e_1(B)^1=0.009801\\
+        \operatorname{P}(ABA)&=e_1(A)^2e_1(B)^1=0.009801\\
+        \operatorname{P}(ABB)&=e_1(A)^1e_1(B)^2=0.000099\\
+        \operatorname{P}(BAA)&=e_1(A)^2e_1(B)^1=0.009801\\
+        \operatorname{P}(BAB)&=e_1(A)^1e_1(B)^2=0.000099\\
+        \operatorname{P}(BBA)&=e_1(A)^1e_1(B)^2=0.000099\\
+        \operatorname{P}(BBB)&=e_1(A)^0e_1(B)^3=0.000001
+\end{align*}
+Because the sequence that is generated may be of an arbitrary length, there can be an arbitrarily large number of sequences that
+begin after the first state. So the effect of the initial state probabilities goes to zero, and we can conclude that the most
+probable sequence of three output symbols that can be generated from this HMM model is \(AAA\).
 
 \section*{Problem 3}
 
