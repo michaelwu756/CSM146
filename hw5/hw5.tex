@@ -39,14 +39,14 @@ We can find the maximum likelihood estimate for each of our parameters by findin
 \[\max_{\alpha_1,\beta_1,\gamma_1,\alpha_0,\beta_0,\gamma_0}\sum_{i=1}^m\log \operatorname{P}(D_i, y_i)\]
 Our maximum likelihood estimate occurs when
 \[\frac{\partial}{\partial \alpha_1}\sum_{i=1}^m\log \operatorname{P}(D_i, y_i)=0\]
-Because we are given that \(\alpha_1+\beta_1+\gamma_1=1\), we know that \(\beta_1\) and \(\gamma_1\) are functions of \(\alpha_1\). So we can let
+Because we are given that \(\alpha_1+\beta_1+\gamma_1=1\), we know that \(\beta_1\) is a function of \(\alpha_1\) and \(\gamma_1\). So we can let
 \(\beta_1=1-\alpha_1-\gamma_1\). Taking the partial derivative yields
 \begin{align*}
         \frac{\partial}{\partial \alpha_1}\sum_{i=1}^m\log \operatorname{P}(D_i, y_i)&=\frac{\partial}{\partial \alpha_1}\sum_{i=1}^m y_i(a_i\log\alpha_1+b_i\log\beta_1)\\
         &=\frac{\partial}{\partial \alpha_1}\sum_{i=1}^m y_i(a_i\log\alpha_1+b_i\log(1-\alpha_1-\gamma_1))\\
         &=\sum_{i=1}^my_i\left(\frac{a_i}{\alpha_1}-\frac{b_i}{1-\alpha_1-\gamma_1}\right)\\
         &=\sum_{i=1}^my_i(a_i(1-\alpha_1-\gamma_1)-b_i\alpha_1)\\
-        &=(1-\gamma_1)\sum_{i=1}^m y_ia_i-\alpha_1\sum_{i=1}^m y_i(a_i+b_i)\\
+        &=(1-\gamma_1)\sum_{i=1}^m y_ia_i-\alpha_1\sum_{i=1}^m y_i(a_i+b_i)
 \end{align*}
 Then we can solve for zero which gives
 \[\alpha_1=\frac{\sum_{i=1}^m y_ia_i}{\sum_{i=1}^m y_i(a_i+b_i)}(1-\gamma_1)=C_1(1-\gamma_1)\]
@@ -55,7 +55,7 @@ Using the same process with the partial derivative for \(\gamma_1\) yields
         \frac{\partial}{\partial \gamma_1}\sum_{i=1}^m\log \operatorname{P}(D_i, y_i)&=\frac{\partial}{\partial \gamma_1}\sum_{i=1}^m y_i(c_i\log\gamma_1+b_i\log\beta_1)\\
         &=\sum_{i=1}^my_i\left(\frac{c_i}{\gamma_1}-\frac{b_i}{1-\alpha_1-\gamma_1}\right)\\
         &=\sum_{i=1}^my_i(c_i(1-\alpha_1-\gamma_1)-b_i\gamma_1)\\
-        &=(1-\alpha_1)\sum_{i=1}^m y_ic_i-\gamma_1\sum_{i=1}^m y_i(b_i+c_i)\\
+        &=(1-\alpha_1)\sum_{i=1}^m y_ic_i-\gamma_1\sum_{i=1}^m y_i(b_i+c_i)
 \end{align*}
 Setting this equal to zero gives us
 \[\gamma_1=\frac{\sum_{i=1}^m y_ic_i}{\sum_{i=1}^m y_i(b_i+c_i)}(1-\alpha_1)=C_2(1-\alpha_1)\]
@@ -84,12 +84,12 @@ where
 because of the symmetry of our log likelihood function \(\log \operatorname{P}(D_i, y_i)\). After some algebraic simplification
 these values become
 \begin{align*}
-        \alpha_1&=\frac{\sum_{i=1}^m y_ia_i}{\sum_{i=1}^m y_i(a_i+b_i+c_i)}\\
-        \beta_1&=\frac{\sum_{i=1}^m y_ib_i}{\sum_{i=1}^m y_i(a_i+b_i+c_i)}\\
-        \gamma_1&=\frac{\sum_{i=1}^m y_ic_i}{\sum_{i=1}^m y_i(a_i+b_i+c_i)}\\
-        \alpha_0&=\frac{\sum_{i=1}^m (1-y_i)a_i}{\sum_{i=1}^m (1-y_i)(a_i+b_i+c_i)}\\
-        \beta_0&=\frac{\sum_{i=1}^m (1-y_i)b_i}{\sum_{i=1}^m (1-y_i)(a_i+b_i+c_i)}\\
-        \gamma_0&=\frac{\sum_{i=1}^m (1-y_i)c_i}{\sum_{i=1}^m (1-y_i)(a_i+b_i+c_i)}\\
+        \alpha_1&=\frac{\sum_{i=1}^m y_ia_i}{\sum_{i=1}^m y_in}\\
+        \beta_1&=\frac{\sum_{i=1}^m y_ib_i}{\sum_{i=1}^m y_in}\\
+        \gamma_1&=\frac{\sum_{i=1}^m y_ic_i}{\sum_{i=1}^m y_in}\\
+        \alpha_0&=\frac{\sum_{i=1}^m (1-y_i)a_i}{\sum_{i=1}^m (1-y_i)n}\\
+        \beta_0&=\frac{\sum_{i=1}^m (1-y_i)b_i}{\sum_{i=1}^m (1-y_i)n}\\
+        \gamma_0&=\frac{\sum_{i=1}^m (1-y_i)c_i}{\sum_{i=1}^m (1-y_i)n}
 \end{align*}
 such that \(\alpha_1\) is the total proportion of \(a\) words in the set of \(D_i\) that have label \(y_i=1\), \(\beta_1\) is the total
 proportion of \(b\) words in the set of \(D_i\) that have label \(y_i=1\), \(\gamma_1\) is the total proportion of \(c\) words in the set
