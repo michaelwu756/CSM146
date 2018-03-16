@@ -129,10 +129,11 @@ def random_init(points, k) :
     --------------------
         initial_points -- list of k Points, initial cluster centers
     """
-    ### ========== TODO : START ========== ###
-    # part c: implement (hint: use np.random.choice)
-    return None
-    ### ========== TODO : END ========== ###
+    initial_points = []
+    for i in range(0, k):
+        choice = np.random.choice(len(points))
+        initial_points.append(points.pop(choice))
+    return initial_points
 
 
 def cheat_init(points) :
@@ -182,17 +183,24 @@ def kMeans(points, k, init='random', plot=False) :
         k_clusters -- ClusterSet, k clusters
     """
     
-    ### ========== TODO : START ========== ###
-    # part c: implement
-    # Hints:
-    #   (1) On each iteration, keep track of the new cluster assignments
-    #       in a separate data structure. Then use these assignments to create
-    #       a new ClusterSet object and update the centroids.
-    #   (2) Repeat until the clustering no longer changes.
-    #   (3) To plot, use plot_clusters(...).
     k_clusters = ClusterSet()
+    if init=='random':
+        initSet = random_init(points, k)
+    else if init=='cheat':
+        initSet = cheat_init(points)
+    for p in initSet:
+        k_clusters.add(p)
+    while True:
+        newClusters = ClusterSet()
+        for p in k_clusters.centroids():
+            newClusters.add(p)
+        if k_clusters.equivalent(newClusters):
+            break
+        else:
+            k_clusters=newClusters
+    if plot:
+        plot_clusters(k_clusters, "kMeans "+init, Clusterset.centroids)
     return k_clusters
-    ### ========== TODO : END ========== ###
 
 
 def kMedoids(points, k, init='random', plot=False) :
