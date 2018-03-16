@@ -80,7 +80,7 @@ def plot_clusters(clusters, title, average) :
             coord = point.attrs
             plt.plot(coord[0], coord[1], 'o', color=colors[label])
     plt.title(title)
-    plt.show()
+    plt.savefig(title.replace(' ','')+'.pdf')
 
 
 def generate_points_2d(N, seed=1234) :
@@ -182,24 +182,48 @@ def kMeans(points, k, init='random', plot=False) :
     --------------------
         k_clusters -- ClusterSet, k clusters
     """
-    
     k_clusters = ClusterSet()
     if init=='random':
         initSet = random_init(points, k)
-    else if init=='cheat':
+    elif init=='cheat':
         initSet = cheat_init(points)
-    for p in initSet:
-        k_clusters.add(p)
+    clusterMap = {}
+    for c in initSet:
+        clusterMap[c]=[]
+    for p in points:
+        closest = None
+        distance = float('inf')
+        for c in initSet:
+            if p.distance(c)<distance:
+                closest=c
+                distance=p.distance(c)
+        clusterMap[closest].append(p)
+    for cluster in clusterMap.values():
+        k_clusters.add(Cluster(cluster))
+    iteration = 0
     while True:
+        if plot:
+            plot_clusters(k_clusters, "kMeans "+init+" iteration "+str(iteration), ClusterSet.centroids)
+        iteration+=1
         newClusters = ClusterSet()
-        for p in k_clusters.centroids():
-            newClusters.add(p)
+        clusterMap = {}
+        centroids = k_clusters.centroids()
+        for c in centroids:
+            clusterMap[c]=[]
+        for p in points:
+            closest = None
+            distance = float('inf')
+            for c in centroids:
+                if p.distance(c)<distance:
+                    closest=c
+                    distance=p.distance(c)
+            clusterMap[closest].append(p)
+        for cluster in clusterMap.values():
+            newClusters.add(Cluster(cluster))
         if k_clusters.equivalent(newClusters):
             break
         else:
             k_clusters=newClusters
-    if plot:
-        plot_clusters(k_clusters, "kMeans "+init, Clusterset.centroids)
     return k_clusters
 
 
@@ -224,7 +248,8 @@ def main() :
     ### ========== TODO : START ========== ###
     # part d, part e, part f: cluster toy dataset
     np.random.seed(1234)
-    
+    points = generate_points_2d(20)
+    kMeans(points, 3, init='random', plot=True)
     ### ========== TODO : END ========== ###
     
     

@@ -114,10 +114,10 @@ class Cluster(object) :
             labels.append(p.label)
 
         cluster_label, num = stats.mode(labels)
-        sums = np.zeros(self.points[0].attr.size)
+        sums = np.zeros(self.points[0].attrs.size)
         count = 0
         for p in self.points:
-            sums += p.attr
+            sums += p.attrs
             count += 1
         centroid = Point("centroid "+str(cluster_label), cluster_label, sums/float(count))
         return centroid
@@ -134,7 +134,7 @@ class Cluster(object) :
         """
 
         medoid = None
-        minDistance = math.inf
+        minDistance = float('inf')
         for p in self.points:
             totalDistance = 0
             for q in self.points:
