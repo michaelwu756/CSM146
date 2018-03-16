@@ -121,7 +121,7 @@ class Cluster(object) :
             sum_x += p.attr[0]
             sum_y += p.attr[1]
             count += 1
-        centroid = Point("centroid", cluster_label, np.array([sum_x/float(count), sum_y/float(count)]))
+        centroid = Point("centroid "+str(cluster_label), cluster_label, np.array([sum_x/float(count), sum_y/float(count)]))
         return centroid
 
 
@@ -199,11 +199,10 @@ class ClusterSet(object):
             centroids -- list of Points, centroids of each cluster in this cluster set
         """
 
-        ### ========== TODO : START ========== ###
-        # part 2b: implement
         centroids = []
+        for cluster in self.members:
+            centroids.append(cluster.centroid())
         return centroids
-        ### ========== TODO : END ========== ###
 
 
     def medoids(self) :
@@ -215,11 +214,10 @@ class ClusterSet(object):
             medoids -- list of Points, medoids of each cluster in this cluster set
         """
 
-        ### ========== TODO : START ========== ###
-        # part 2b: implement
         medoids = []
+        for medoid in self.members:
+            medoids.append(cluster.medoid())
         return medoids
-        ### ========== TODO : END ========== ###
 
 
     def score(self) :
