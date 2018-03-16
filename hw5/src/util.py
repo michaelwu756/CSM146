@@ -22,17 +22,17 @@ lfw_imageSize = (50,37)
 def get_lfw_data() :
     """
     Fetch LFW (Labeled Faces in the Wild) dataset.
-    
+
     Warning : This will take a long time the first time you run it.
     It will download data onto disk but then will use the local copy thereafter.
-    
+
     Returns
     --------------------
         X -- numpy array of shape (n,d), features (each row is one image)
         y -- numpy array of shape (n,), targets
              elements are integers in [0, num_classes-1]
     """
-    
+
     global X, n, d, y, h, w
     lfw_people = fetch_lfw_people(min_faces_per_person=40, resize=0.4)
     n, h, w = lfw_people.images.shape
@@ -40,26 +40,26 @@ def get_lfw_data() :
     d = X.shape[1]
     y = lfw_people.target
     num_classes = lfw_people.target_names.shape[0]
- 
+
     print("Total dataset size:")
     print("\tnum_samples: %d" % n)
     print("\tnum_features: %d" % d)
     print("\tnum_classes: %d" % num_classes)
-    
+
     return X, y
 
 
 def show_image(im, size=lfw_imageSize) :
     """
     Open a new window and display the image.
-    
+
     Parameters
     --------------------
         im   -- numpy array of shape (d,), image
         size -- tuple (i,j), i and j are positive integers such that i * j = d
                 default to the right value for LFW dataset
     """
-    
+
     plt.figure()
     im = im.copy()
     im.resize(*size)
@@ -71,7 +71,7 @@ def plot_gallery(images, title='plot', subtitles=[],
                  h=50, w=37, n_row=3, n_col=4):
     """
     Plot array of images.
-    
+
     Parameters
     --------------------
         images       -- numpy array of shape (12,d), images (one per row)
@@ -80,7 +80,7 @@ def plot_gallery(images, title='plot', subtitles=[],
         h, w         -- ints, image sizes
         n_row, n_col -- ints, number of rows and columns for plot
     """
-    
+
     plt.figure(title, figsize=(1.8*n_col, 2.4*n_row))
     plt.subplots_adjust(bottom=0, left=.01, right=.99, top=.90, hspace=.35)
     for i in range(min(len(images), n_row*n_col)):
@@ -97,20 +97,20 @@ def limit_pics(X, y, classes, nim):
     """
     Select subset of images from dataset.
     User can specify desired classes and desired number of images per class.
-    
+
     Parameters
     --------------------
         X       -- numpy array of shape (n,d), features
         y       -- numpy array of shape (n,), targets
         classes -- list of ints, subset of target classes to retain
         nim     -- int, number of images desired per class
-    
+
     Returns
     --------------------
         X1      -- numpy array of shape (nim * len(classes), d), subset of X
         y1      -- numpy array of shape (nim * len(classes),), subset of y
     """
-    
+
     n, d = X.shape
     k = len(classes)
     X1 = np.zeros((k*nim, d), dtype=float)
@@ -134,18 +134,17 @@ def limit_pics(X, y, classes, nim):
 def random_sample_2d(mu, sigma):
     """
     Randomly sample point from a normal distribution.
-    
+
     Parameters
     --------------------
         mu    -- numpy array of shape (2,), mean along each dimension
         sigma -- numpy array of shape (2,), standard deviation along each dimension
-    
+
     Returns
     --------------------
         point -- numpy array of shape (2,), sampled point
     """
-    
+
     x = np.random.normal(mu[0], sigma[0])
     y = np.random.normal(mu[1], sigma[1])
     return np.array([x,y])
-
