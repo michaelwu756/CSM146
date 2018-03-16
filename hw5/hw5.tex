@@ -1,5 +1,8 @@
 \documentclass[12pt]{article}
 \usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{chngpage}
+\graphicspath{{./src/}}
 \begin{document}
 \title{Computer Science M146, Homework 5}
 \date{March 15th, 2018}
@@ -148,12 +151,60 @@ So \(c^{(i)}=i\), \(\mu_i=x^{i}\), and \(k=n\). This is a bad idea because it gi
 
 \paragraph{b)}
 
+This implementation was pretty simple. In \texttt{Cluster} I simply took the average of all the features to find the centroid, and used the distance function
+to find the medoids. In \texttt{ClusterSet} I simply returned a list of all the centroids and medoids to implement the missing functions in the class.
+
 \paragraph{c)}
+
+For \texttt{random\_init}, I used \texttt{np.random.choice} to select random starting points from the list of given points. I made sure to copy points and pop
+the selected points in order to avoid duplicates. In \texttt{kMeans} I implemented the initial point generation based on either random or cheat, then I
+found the initial clusters based on these initial points. I implemented plotting for each iteration of the algorithm, and made it calculate updated clusters
+by calculating the centroids and assigning points to the closest centroid. I terminate the algorithm when the centroids do not change after an iteration.
 
 \paragraph{d)}
 
+The results of running the \texttt{kMeans} algorithm with a random initialization are shown in the following figure.
+\begin{figure}[h]
+        \begin{adjustwidth}{-2in}{-2in}
+                \begin{center}
+                        \includegraphics[width=0.45\textwidth]{kMeansrandomiteration0}
+                        \includegraphics[width=0.45\textwidth]{kMeansrandomiteration1}
+                        \includegraphics[width=0.45\textwidth]{kMeansrandomiteration2}
+                        \includegraphics[width=0.45\textwidth]{kMeansrandomiteration3}
+                        \includegraphics[width=0.45\textwidth]{kMeansrandomiteration4}
+                        \includegraphics[width=0.45\textwidth]{kMeansrandomiteration5}
+                        \includegraphics[width=0.45\textwidth]{kMeansrandomiteration6}
+                        \includegraphics[width=0.45\textwidth]{kMeansrandomiteration7}
+                        \caption{All iterations of kMeans with random initialization.}
+                \end{center}
+        \end{adjustwidth}
+\end{figure}
+\clearpage
+
 \paragraph{e)}
 
+The results of running the \texttt{kMedoids} algorithm with a random initialization are shown in the following figure.
+\begin{figure}[h]
+        \begin{adjustwidth}{-2in}{-2in}
+                \begin{center}
+                        \includegraphics[width=0.45\textwidth]{kMedoidsrandomiteration0}
+                        \includegraphics[width=0.45\textwidth]{kMedoidsrandomiteration1}
+                        \includegraphics[width=0.45\textwidth]{kMedoidsrandomiteration2}
+                        \caption{All iterations of kMedoids with random initialization.}
+                \end{center}
+        \end{adjustwidth}
+\end{figure}
+
 \paragraph{f)}
+
+The results of running the \texttt{kMeans} and \texttt{kMedoids} algorithm with a cheating initialization are shown in the following figure.
+\begin{figure}[h]
+        \begin{center}
+                \includegraphics[width=0.495\textwidth]{kMeanscheatiteration0}
+                \includegraphics[width=0.495\textwidth]{kMedoidscheatiteration0}
+                \caption{kMeans and kMedoids with cheating initialization.}
+        \end{center}
+\end{figure}
+Note that both algorithms terminated after one iteration as the cheating allowed the algorithms to begin with the optimal clusters.
 
 \end{document}
