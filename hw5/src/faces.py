@@ -154,11 +154,16 @@ def cheat_init(points) :
     --------------------
         initial_points -- list of k Points, initial cluster centers
     """
-    ### ========== TODO : START ========== ###
-    # part f: implement
     initial_points = []
+    clusterMap = {}
+    for p in points:
+        if p.label in clusterMap.keys():
+            clusterMap[p.label].append(p)
+        else:
+            clusterMap[p.label]=[p]
+    for cluster in clusterMap.values():
+        initial_points.append(Cluster(cluster).medoid())
     return initial_points
-    ### ========== TODO : END ========== ###
 
 
 def kMeans(points, k, init='random', plot=False) :
@@ -247,15 +252,12 @@ def kMedoids(points, k, init='random', plot=False) :
 
 def main() :
 
-    ### ========== TODO : START ========== ###
-    # part d, part e, part f: cluster toy dataset
     np.random.seed(1234)
     points = generate_points_2d(20)
     kMeans(points, 3, init='random', plot=True)
-    ### ========== TODO : END ========== ###
-
-
-
+    kMedoids(points, 3, init='random', plot=True)
+    kMeans(points, 3, init='cheat', plot=True)
+    kMedoids(points, 3, init='cheat', plot=True)
 
 if __name__ == "__main__" :
     main()

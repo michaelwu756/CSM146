@@ -213,7 +213,7 @@ class ClusterSet(object):
         """
 
         medoids = []
-        for medoid in self.members:
+        for cluster in self.members:
             medoids.append(cluster.medoid())
         return medoids
 
