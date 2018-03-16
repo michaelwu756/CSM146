@@ -79,7 +79,7 @@ def plot_clusters(clusters, title, average) :
         for point in cluster.points :
             coord = point.attrs
             plt.plot(coord[0], coord[1], 'o', color=colors[label])
-    plt.title(title)
+    plt.title(title, fontsize=20)
     plt.savefig(title.replace(' ','')+'.pdf')
 
 
