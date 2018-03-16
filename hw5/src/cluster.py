@@ -114,14 +114,12 @@ class Cluster(object) :
             labels.append(p.label)
 
         cluster_label, num = stats.mode(labels)
-        sum_x = 0
-        sum_y = 0
+        sums = np.zeros(self.points[0].attr.size)
         count = 0
         for p in self.points:
-            sum_x += p.attr[0]
-            sum_y += p.attr[1]
+            sums += p.attr
             count += 1
-        centroid = Point("centroid "+str(cluster_label), cluster_label, np.array([sum_x/float(count), sum_y/float(count)]))
+        centroid = Point("centroid "+str(cluster_label), cluster_label, sums/float(count))
         return centroid
 
 
